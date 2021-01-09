@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:rickpan_app/src/pages/direcciones_page.dart';
 import 'package:rickpan_app/src/pages/mapas_page.dart';
 
+import 'package:qrcode_reader/qrcode_reader.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -27,10 +29,23 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.filter_center_focus),
-        onPressed: () {},
+        onPressed: _scanQR,
         backgroundColor: Theme.of(context).primaryColor,
       ),
     );
+  }
+
+  _scanQR() async {
+    String futureString = '';
+    try {
+      futureString = await new QRCodeReader().scan();
+    } catch (e) {
+      futureString = e.toString();
+    }
+    print('futureString:  $futureString');
+    if (futureString != null) {
+      print('HAY INFORMACION');
+    }
   }
 
   Widget _cargarPage(int paginaActual) {
