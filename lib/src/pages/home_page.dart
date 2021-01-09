@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:rickpan_app/src/pages/direcciones_page.dart';
 import 'package:rickpan_app/src/pages/mapas_page.dart';
 
+import 'dart:async';
 import 'package:qrcode_reader/qrcode_reader.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,6 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
+  Future<String> _barcodeString;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
