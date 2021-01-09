@@ -13,7 +13,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
-  Future<String> _barcodeString;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
