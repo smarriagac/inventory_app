@@ -28,6 +28,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.filter_center_focus),
         onPressed: () {},
+        backgroundColor: Theme.of(context).primaryColor,
       ),
     );
   }
