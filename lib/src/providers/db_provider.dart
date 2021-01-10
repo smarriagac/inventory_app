@@ -57,7 +57,7 @@ class DBprovider {
     return res;
   }
 
-  // SELECT - Obtener indormación
+  // SELECT - Obtener información
 
   //Scans por id
   Future<ScanModel> getScanId(int id) async {
@@ -86,5 +86,14 @@ class DBprovider {
         res.isNotEmpty ? res.map((e) => ScanModel.fromJson(e)).toList() : [];
 
     return list;
+  }
+
+  // Actualizar Registros
+
+  Future<int> updateScan(ScanModel nuevoScan) async {
+    final db = await database;
+    final res = await db.update('Scans', nuevoScan.toJson(),
+        where: 'id = ?', whereArgs: [nuevoScan.id]);
+    return res;
   }
 }
