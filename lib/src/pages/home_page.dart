@@ -33,13 +33,13 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.filter_center_focus),
-        onPressed: _scanQR,
+        onPressed: _scanQR(context),
         backgroundColor: Theme.of(context).primaryColor,
       ),
     );
   }
 
-  _scanQR() async {
+  _scanQR(BuildContext context) async {
 /*     String futureString = '';
     try {
       futureString = await new QRCodeReader().scan();
@@ -50,6 +50,8 @@ class _HomePageState extends State<HomePage> {
     if (futureString != null) {
       print('HAY INFORMACION');
     } */
+
+    String futureString = await Navigator.of(context).pushNamed('qr');
   }
 
   Widget _cargarPage(int paginaActual) {
