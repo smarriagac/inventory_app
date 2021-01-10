@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rickpan_app/src/models/scan_model.dart';
 
 import 'package:rickpan_app/src/pages/direcciones_page.dart';
 import 'package:rickpan_app/src/pages/mapas_page.dart';
+import 'package:rickpan_app/src/providers/db_provider.dart';
 
 import 'package:super_qr_reader/super_qr_reader.dart';
 
@@ -37,16 +39,25 @@ class _HomePageState extends State<HomePage> {
   }
 
   _scanQR() async {
-    String result = '';
+    //String result = '';
+    String result = 'https://fernando-herrera.com';
+    //String result = 'geo: 40.7242330447051705,-74.00731459101566';
     // https://fernando-herrera.com
     // geo: 40.7242330447051705,-74.00731459101566
+
+    if (result != null) {
+      final scan = ScanModel(valor: result);
+      DBprovider.db.nuevoScan(scan);
+    }
+
+    // codigo funcional comentado
 
 /*     String results = await Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ScanView(),
         ));
-
+    
     if (results != null) {
       result = results;
       print('Resultados lectura qr= $result');
