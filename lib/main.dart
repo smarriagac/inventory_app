@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       initialRoute: 'home',
       routes: {
         'home': (BuildContext context) => HomePage(),
-        'qr': (BuildContext context) => ScanView(),
+        //'qr': (BuildContext context) => ScanView(),
       },
       theme: ThemeData(
         primaryColor: Colors.redAccent,

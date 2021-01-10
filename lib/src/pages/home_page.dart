@@ -5,8 +5,6 @@ import 'package:rickpan_app/src/pages/mapas_page.dart';
 
 import 'package:super_qr_reader/super_qr_reader.dart';
 
-import 'package:qrcode_reader/qrcode_reader.dart';
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -33,13 +31,13 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.filter_center_focus),
-        onPressed: _scanQR(context),
         backgroundColor: Theme.of(context).primaryColor,
+        onPressed: _scanQR,
       ),
     );
   }
 
-  _scanQR(BuildContext context) async {
+  _scanQR() async {
 /*     String futureString = '';
     try {
       futureString = await new QRCodeReader().scan();
@@ -51,7 +49,16 @@ class _HomePageState extends State<HomePage> {
       print('HAY INFORMACION');
     } */
 
-    String futureString = await Navigator.of(context).pushNamed('qr');
+    String results = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ScanView(),
+        ));
+
+    if (results != null) {
+      result = results;
+      print('Resultados lectura qr= $result');
+    }
   }
 
   Widget _cargarPage(int paginaActual) {
