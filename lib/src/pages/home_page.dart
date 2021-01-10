@@ -12,7 +12,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
-  String result = '';
 
   @override
   Widget build(BuildContext context) {
@@ -38,20 +37,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   _scanQR() async {
-/*     String futureString = '';
-    try {
-      futureString = await new QRCodeReader().scan();
-    } catch (e) {
-      futureString = e.toString();
-    }
-    print('futureString:  $futureString');
-    if (futureString != null) {
-      print('HAY INFORMACION');
-    } */
+    String result = '';
     // https://fernando-herrera.com
     // geo: 40.7242330447051705,-74.00731459101566
 
-    String results = await Navigator.push(
+/*     String results = await Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ScanView(),
@@ -60,7 +50,7 @@ class _HomePageState extends State<HomePage> {
     if (results != null) {
       result = results;
       print('Resultados lectura qr= $result');
-    }
+    } */
   }
 
   Widget _cargarPage(int paginaActual) {
