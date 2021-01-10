@@ -48,6 +48,8 @@ class _HomePageState extends State<HomePage> {
     if (futureString != null) {
       print('HAY INFORMACION');
     } */
+    // https://fernando-herrera.com
+    // geo: 40.7242330447051705,-74.00731459101566
 
     String results = await Navigator.push(
         context,
