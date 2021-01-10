@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:rickpan_app/src/providers/db_provider.dart';
+
+import 'package:rickpan_app/src/bloc/scans_bloc.dart';
+import 'package:rickpan_app/src/models/scan_model.dart';
 
 class MapasPage extends StatelessWidget {
+  final scansBloc = new ScansBloc();
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<ScanModel>>(
-      future: DBprovider.db.getTodosScans(),
+    return StreamBuilder<List<ScanModel>>(
+      stream: scansBloc.scansStream,
       builder: (BuildContext context, AsyncSnapshot<List<ScanModel>> snapshot) {
         if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
@@ -23,8 +26,7 @@ class MapasPage extends StatelessWidget {
             itemBuilder: (context, i) => Dismissible(
                   key: UniqueKey(),
                   background: Container(color: Colors.red),
-                  onDismissed: (direction) =>
-                      DBprovider.db.deleteScan(scans[i].id),
+                  onDismissed: (direction) => scansBloc.borrarScan(scans[i].id),
                   child: ListTile(
                     leading: Icon(Icons.cloud_queue,
                         color: Theme.of(context).primaryColor),

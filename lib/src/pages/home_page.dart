@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+
+import 'package:rickpan_app/src/bloc/scans_bloc.dart';
 import 'package:rickpan_app/src/models/scan_model.dart';
 
 import 'package:rickpan_app/src/pages/direcciones_page.dart';
 import 'package:rickpan_app/src/pages/mapas_page.dart';
-import 'package:rickpan_app/src/providers/db_provider.dart';
 
 import 'package:super_qr_reader/super_qr_reader.dart';
 
@@ -13,6 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final scansBloc = new ScansBloc();
   int currentIndex = 0;
 
   @override
@@ -23,7 +25,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             icon: Icon(Icons.delete_forever),
-            onPressed: () {},
+            onPressed: scansBloc.borrarScanTODOS,
           )
         ],
       ),
@@ -47,7 +49,11 @@ class _HomePageState extends State<HomePage> {
 
     if (result != null) {
       final scan = ScanModel(valor: result);
-      DBprovider.db.nuevoScan(scan);
+      scansBloc.agregarScan(scan);
+
+      final scan2 =
+          ScanModel(valor: 'geo:40.7242330447051705,-74.00731459101566');
+      scansBloc.agregarScan(scan2);
     }
 
     // codigo funcional comentado
