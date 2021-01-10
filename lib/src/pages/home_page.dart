@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:rickpan_app/src/pages/direcciones_page.dart';
 import 'package:rickpan_app/src/pages/mapas_page.dart';
 
+import 'package:super_qr_reader/super_qr_reader.dart';
+
 import 'package:qrcode_reader/qrcode_reader.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,6 +14,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
+  String result = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +40,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _scanQR() async {
-    String futureString = '';
+/*     String futureString = '';
     try {
       futureString = await new QRCodeReader().scan();
     } catch (e) {
@@ -45,7 +49,7 @@ class _HomePageState extends State<HomePage> {
     print('futureString:  $futureString');
     if (futureString != null) {
       print('HAY INFORMACION');
-    }
+    } */
   }
 
   Widget _cargarPage(int paginaActual) {
