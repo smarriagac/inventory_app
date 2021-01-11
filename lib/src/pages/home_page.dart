@@ -36,18 +36,17 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.filter_center_focus),
         backgroundColor: Theme.of(context).primaryColor,
-        onPressed: _scanQR,
+        onPressed: () => _scanQR(context),
       ),
     );
   }
 
-  _scanQR() async {
-    //   String result = '';
-    String result = 'https://fernando-herrera.com';
-    //String result = 'geo: 40.7242330447051705,-74.00731459101566';
+  _scanQR(BuildContext context) async {
     // https://fernando-herrera.com
     // geo: 40.7242330447051705,-74.00731459101566
-// prueba sin scan
+// ================ prueba sin scan =========================== //
+
+    String result = 'https://fernando-herrera.com';
     if (result != null) {
       final scan = ScanModel(valor: result);
       scansBloc.agregarScan(scan);
@@ -56,12 +55,14 @@ class _HomePageState extends State<HomePage> {
           ScanModel(valor: 'geo:40.7242330447051705,-74.00731459101566');
       scansBloc.agregarScan(scan2);
 
-      utils.abrirScan(scan);
+      utils.abrirScan(context, scan);
     }
 
-    // codigo funcional comentado
+// =============== codigo funcional comentado con scan ================== //
 
-/*     String results = await Navigator.push(
+/*     String result = '';
+
+    String results = await Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ScanView(),
@@ -71,8 +72,11 @@ class _HomePageState extends State<HomePage> {
       result = results;
       //print('Resultados lectura qr= $result');
       final scan = ScanModel(valor: result);
-      scansBloc.agregarScan(scan); 
+      scansBloc.agregarScan(scan);
+      utils.abrirScan(context, scan);
     } */
+
+// ===================== ACA TERMINA CON SCAN ============================== //
   }
 
   Widget _cargarPage(int paginaActual) {
