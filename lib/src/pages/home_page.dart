@@ -5,6 +5,7 @@ import 'package:rickpan_app/src/models/scan_model.dart';
 
 import 'package:rickpan_app/src/pages/direcciones_page.dart';
 import 'package:rickpan_app/src/pages/mapas_page.dart';
+import 'package:rickpan_app/src/utils/utils.dart' as utils;
 
 import 'package:super_qr_reader/super_qr_reader.dart';
 
@@ -41,24 +42,26 @@ class _HomePageState extends State<HomePage> {
   }
 
   _scanQR() async {
-    String result = '';
-    //String result = 'https://fernando-herrera.com';
+    //   String result = '';
+    String result = 'https://fernando-herrera.com';
     //String result = 'geo: 40.7242330447051705,-74.00731459101566';
     // https://fernando-herrera.com
     // geo: 40.7242330447051705,-74.00731459101566
 // prueba sin scan
-/*     if (result != null) {
+    if (result != null) {
       final scan = ScanModel(valor: result);
       scansBloc.agregarScan(scan);
 
       final scan2 =
           ScanModel(valor: 'geo:40.7242330447051705,-74.00731459101566');
       scansBloc.agregarScan(scan2);
-    } */
+
+      utils.abrirScan(scan);
+    }
 
     // codigo funcional comentado
 
-    String results = await Navigator.push(
+/*     String results = await Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ScanView(),
@@ -68,8 +71,8 @@ class _HomePageState extends State<HomePage> {
       result = results;
       //print('Resultados lectura qr= $result');
       final scan = ScanModel(valor: result);
-      scansBloc.agregarScan(scan);
-    }
+      scansBloc.agregarScan(scan); 
+    } */
   }
 
   Widget _cargarPage(int paginaActual) {
