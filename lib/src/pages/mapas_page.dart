@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:rickpan_app/src/bloc/scans_bloc.dart';
 import 'package:rickpan_app/src/models/scan_model.dart';
+import 'package:rickpan_app/src/utils/utils.dart';
+import 'package:rickpan_app/src/utils/utils.dart' as utils;
 
 class MapasPage extends StatelessWidget {
   final scansBloc = new ScansBloc();
@@ -28,6 +30,7 @@ class MapasPage extends StatelessWidget {
                   background: Container(color: Colors.red),
                   onDismissed: (direction) => scansBloc.borrarScan(scans[i].id),
                   child: ListTile(
+                    onTap: () => utils.abrirScan(scans[i]),
                     leading: Icon(Icons.cloud_queue,
                         color: Theme.of(context).primaryColor),
                     title: Text(scans[i].valor),
