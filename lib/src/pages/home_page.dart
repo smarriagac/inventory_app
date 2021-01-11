@@ -41,33 +41,35 @@ class _HomePageState extends State<HomePage> {
   }
 
   _scanQR() async {
-    //String result = '';
-    String result = 'https://fernando-herrera.com';
+    String result = '';
+    //String result = 'https://fernando-herrera.com';
     //String result = 'geo: 40.7242330447051705,-74.00731459101566';
     // https://fernando-herrera.com
     // geo: 40.7242330447051705,-74.00731459101566
-
-    if (result != null) {
+// prueba sin scan
+/*     if (result != null) {
       final scan = ScanModel(valor: result);
       scansBloc.agregarScan(scan);
 
       final scan2 =
           ScanModel(valor: 'geo:40.7242330447051705,-74.00731459101566');
       scansBloc.agregarScan(scan2);
-    }
+    } */
 
     // codigo funcional comentado
 
-/*     String results = await Navigator.push(
+    String results = await Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ScanView(),
         ));
-    
+
     if (results != null) {
       result = results;
-      print('Resultados lectura qr= $result');
-    } */
+      //print('Resultados lectura qr= $result');
+      final scan = ScanModel(valor: result);
+      scansBloc.agregarScan(scan);
+    }
   }
 
   Widget _cargarPage(int paginaActual) {
