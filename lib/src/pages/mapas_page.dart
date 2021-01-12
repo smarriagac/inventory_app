@@ -24,6 +24,7 @@ class MapasPage extends StatelessWidget {
         }
 
         return ListView.builder(
+            padding: EdgeInsets.all(5.0),
             itemCount: scans.length,
             itemBuilder: (context, i) => Dismissible(
                   key: UniqueKey(),
@@ -46,8 +47,9 @@ class MapasPage extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
       child: ListTile(
         onTap: () => utils.abrirScan(context, scans[i]),
-        leading: Icon(Icons.cloud_queue, color: Theme.of(context).primaryColor),
-        title: Text(scans[i].valor),
+        leading: Icon(Icons.house, color: Theme.of(context).primaryColor),
+        title: Text(scans[i].valor,
+            style: TextStyle(fontSize: 15.0, fontStyle: FontStyle.italic)),
         subtitle: Text('ID: ${scans[i].id}'),
         trailing: Icon(Icons.keyboard_arrow_right, color: Colors.grey),
       ),
