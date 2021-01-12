@@ -1,8 +1,9 @@
 import 'dart:async';
 
+import 'package:rickpan_app/src/bloc/validator.dart';
 import 'package:rickpan_app/src/providers/db_provider.dart';
 
-class ScansBloc {
+class ScansBloc with Validators {
   static final ScansBloc _singleton = new ScansBloc._internal();
 
   factory ScansBloc() {
@@ -15,7 +16,10 @@ class ScansBloc {
 
   final _scansController = StreamController<List<ScanModel>>.broadcast();
 
-  Stream<List<ScanModel>> get scansStream => _scansController.stream;
+  Stream<List<ScanModel>> get scansStream =>
+      _scansController.stream.transform(validarTienda);
+  Stream<List<ScanModel>> get scansStreamErroneo =>
+      _scansController.stream.transform(scanError);
 
   dispose() {
     _scansController?.close();
