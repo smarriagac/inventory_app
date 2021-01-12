@@ -9,6 +9,7 @@ class MapasPage extends StatelessWidget {
   final scansBloc = new ScansBloc();
   @override
   Widget build(BuildContext context) {
+    scansBloc.obtenerScans();
     return StreamBuilder<List<ScanModel>>(
       stream: scansBloc.scansStream,
       builder: (BuildContext context, AsyncSnapshot<List<ScanModel>> snapshot) {
@@ -29,14 +30,19 @@ class MapasPage extends StatelessWidget {
                   key: UniqueKey(),
                   background: Container(color: Colors.red),
                   onDismissed: (direction) => scansBloc.borrarScan(scans[i].id),
-                  child: ListTile(
-                    onTap: () => utils.abrirScan(context, scans[i]),
-                    leading: Icon(Icons.cloud_queue,
-                        color: Theme.of(context).primaryColor),
-                    title: Text(scans[i].valor),
-                    subtitle: Text('ID: ${scans[i].id}'),
-                    trailing:
-                        Icon(Icons.keyboard_arrow_right, color: Colors.grey),
+                  child: Card(
+                    elevation: 15.0,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0)),
+                    child: ListTile(
+                      onTap: () => utils.abrirScan(context, scans[i]),
+                      leading: Icon(Icons.cloud_queue,
+                          color: Theme.of(context).primaryColor),
+                      title: Text(scans[i].valor),
+                      subtitle: Text('ID: ${scans[i].id}'),
+                      trailing:
+                          Icon(Icons.keyboard_arrow_right, color: Colors.grey),
+                    ),
                   ),
                 ));
       },

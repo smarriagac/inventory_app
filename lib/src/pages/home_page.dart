@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
     // https://fernando-herrera.com
     // geo: 40.7242330447051705,-74.00731459101566
 // ================ prueba sin scan =========================== //
-
+/* 
     String result = 'https://fernando-herrera.com';
     if (result != null) {
       final scan = ScanModel(valor: result);
@@ -56,11 +56,11 @@ class _HomePageState extends State<HomePage> {
       scansBloc.agregarScan(scan2);
 
       utils.abrirScan(context, scan);
-    }
+    } */
 
 // =============== codigo funcional comentado con scan ================== //
 
-/*     String result = '';
+    String result = '';
 
     String results = await Navigator.push(
         context,
@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
       final scan = ScanModel(valor: result);
       scansBloc.agregarScan(scan);
       utils.abrirScan(context, scan);
-    } */
+    }
 
 // ===================== ACA TERMINA CON SCAN ============================== //
   }

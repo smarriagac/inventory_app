@@ -8,10 +8,10 @@ class ScanModel {
     this.tipo,
     this.valor,
   }) {
-    if (this.valor.contains('http')) {
-      this.tipo = 'http';
+    if (this.valor.contains('Tienda')) {
+      this.tipo = 'Tienda';
     } else {
-      this.tipo = 'geo';
+      this.tipo = 'error';
     }
   }
 
