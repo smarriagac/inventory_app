@@ -100,15 +100,16 @@ class _HomePageState extends State<HomePage> {
         });
       },
       items: [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.map),
-          title: Text('Mapas'),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.brightness_5),
-          title: Text('Direcciones'),
-        ),
+        _itemNavigationBar(Icon(Icons.house), Text('Tiendas')),
+        _itemNavigationBar(Icon(Icons.inventory), Text('Pedidos')),
       ],
+    );
+  }
+
+  _itemNavigationBar(Widget icon, Widget title) {
+    return BottomNavigationBarItem(
+      icon: icon,
+      title: title,
     );
   }
 }

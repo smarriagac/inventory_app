@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:rickpan_app/src/bloc/scans_bloc.dart';
 import 'package:rickpan_app/src/models/scan_model.dart';
-import 'package:rickpan_app/src/utils/utils.dart';
 import 'package:rickpan_app/src/utils/utils.dart' as utils;
 
 class MapasPage extends StatelessWidget {
@@ -30,22 +29,28 @@ class MapasPage extends StatelessWidget {
                   key: UniqueKey(),
                   background: Container(color: Colors.red),
                   onDismissed: (direction) => scansBloc.borrarScan(scans[i].id),
-                  child: Card(
-                    elevation: 15.0,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0)),
-                    child: ListTile(
-                      onTap: () => utils.abrirScan(context, scans[i]),
-                      leading: Icon(Icons.cloud_queue,
-                          color: Theme.of(context).primaryColor),
-                      title: Text(scans[i].valor),
-                      subtitle: Text('ID: ${scans[i].id}'),
-                      trailing:
-                          Icon(Icons.keyboard_arrow_right, color: Colors.grey),
-                    ),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 5),
+                      _infoTarjeta(context, scans, i),
+                    ],
                   ),
                 ));
       },
+    );
+  }
+
+  Widget _infoTarjeta(BuildContext context, List<ScanModel> scans, int i) {
+    return Card(
+      elevation: 15.0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+      child: ListTile(
+        onTap: () => utils.abrirScan(context, scans[i]),
+        leading: Icon(Icons.cloud_queue, color: Theme.of(context).primaryColor),
+        title: Text(scans[i].valor),
+        subtitle: Text('ID: ${scans[i].id}'),
+        trailing: Icon(Icons.keyboard_arrow_right, color: Colors.grey),
+      ),
     );
   }
 }
