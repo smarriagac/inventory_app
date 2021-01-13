@@ -2,13 +2,9 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:rickpan_app/src/bloc/scans_bloc.dart';
-import 'package:rickpan_app/src/models/scan_model.dart';
 
 import 'package:rickpan_app/src/pages/direcciones_page.dart';
-import 'package:rickpan_app/src/pages/mapas_page.dart';
-import 'package:rickpan_app/src/utils/utils.dart' as utils;
-
-import 'package:super_qr_reader/super_qr_reader.dart';
+import 'package:rickpan_app/src/pages/tienda_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -22,62 +18,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-/*       appBar: AppBar(
-        title: Text('Rickpan'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.delete_forever),
-            onPressed: scansBloc.borrarScanTODOS,
-          )
-        ],
-      ), */
       body: _cargarPage(currentIndex),
       bottomNavigationBar: _crearBottomNavigationBar(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.filter_center_focus),
-        backgroundColor: Theme.of(context).primaryColor,
-        onPressed: () => _scanQR(context),
-      ),
     );
-  }
-
-  _scanQR(BuildContext context) async {
-    // https://fernando-herrera.com
-    // geo: 40.7242330447051705,-74.00731459101566
-// ================ prueba sin scan =========================== //
-/* 
-    String result = 'https://fernando-herrera.com';
-    if (result != null) {
-      final scan = ScanModel(valor: result);
-      scansBloc.agregarScan(scan);
-
-      final scan2 =
-          ScanModel(valor: 'geo:40.7242330447051705,-74.00731459101566');
-      scansBloc.agregarScan(scan2);
-
-      utils.abrirScan(context, scan);
-    } */
-
-// =============== codigo funcional comentado con scan ================== //
-
-    String result = '';
-
-    String results = await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ScanView(),
-        ));
-
-    if (results != null) {
-      result = results;
-      //print('Resultados lectura qr= $result');
-      final scan = ScanModel(valor: result);
-      scansBloc.agregarScan(scan);
-      utils.abrirScan(context, scan);
-    }
-
-// ===================== ACA TERMINA CON SCAN ============================== //
   }
 
   Widget _cargarPage(int paginaActual) {
@@ -103,7 +46,6 @@ class _HomePageState extends State<HomePage> {
         Icon(Icons.ac_unit, size: 30),
         Icon(Icons.ac_unit, size: 30)
       ],
-      letIndexChange: (index) => true,
       color: Colors.amberAccent,
       onTap: (index) {
         setState(() {
