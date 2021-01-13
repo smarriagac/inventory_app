@@ -9,35 +9,42 @@ class MapasPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     scansBloc.obtenerScans();
-    return StreamBuilder<List<ScanModel>>(
-      stream: scansBloc.scansStream,
-      builder: (BuildContext context, AsyncSnapshot<List<ScanModel>> snapshot) {
-        if (!snapshot.hasData) {
-          return Center(child: CircularProgressIndicator());
-        }
-        final scans = snapshot.data;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Tiendas'),
+      ),
+      body: StreamBuilder<List<ScanModel>>(
+        stream: scansBloc.scansStream,
+        builder:
+            (BuildContext context, AsyncSnapshot<List<ScanModel>> snapshot) {
+          if (!snapshot.hasData) {
+            return Center(child: CircularProgressIndicator());
+          }
+          final scans = snapshot.data;
 
-        if (scans.length == 0) {
-          return Center(
-            child: Text('No hay informacion'),
-          );
-        }
+          if (scans.length == 0) {
+            return Center(
+              child: Text('No hay informacion'),
+            );
+          }
 
-        return ListView.builder(
-            padding: EdgeInsets.all(5.0),
-            itemCount: scans.length,
-            itemBuilder: (context, i) => Dismissible(
-                  key: UniqueKey(),
-                  background: Container(color: Colors.red),
-                  onDismissed: (direction) => scansBloc.borrarScan(scans[i].id),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 5),
-                      _infoTarjeta(context, scans, i),
-                    ],
-                  ),
-                ));
-      },
+          return ListView.builder(
+              padding: EdgeInsets.all(5.0),
+              itemCount: scans.length,
+              itemBuilder: (context, i) => Dismissible(
+                    key: UniqueKey(),
+                    background: Container(color: Colors.red),
+                    onDismissed: (direction) =>
+                        scansBloc.borrarScan(scans[i].id),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 5),
+                        _infoTarjeta(context, scans, i),
+                      ],
+                    ),
+                  ));
+        },
+      ),
     );
   }
 

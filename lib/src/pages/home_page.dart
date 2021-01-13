@@ -1,3 +1,4 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:rickpan_app/src/bloc/scans_bloc.dart';
@@ -21,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+/*       appBar: AppBar(
         title: Text('Rickpan'),
         actions: [
           IconButton(
@@ -29,10 +30,10 @@ class _HomePageState extends State<HomePage> {
             onPressed: scansBloc.borrarScanTODOS,
           )
         ],
-      ),
+      ), */
       body: _cargarPage(currentIndex),
       bottomNavigationBar: _crearBottomNavigationBar(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.filter_center_focus),
         backgroundColor: Theme.of(context).primaryColor,
@@ -92,24 +93,23 @@ class _HomePageState extends State<HomePage> {
   }
 
   _crearBottomNavigationBar() {
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
+    return CurvedNavigationBar(
+      index: 0,
+      height: 50.0,
+      backgroundColor: Theme.of(context).primaryColor,
+      items: [
+        Icon(Icons.house, size: 30),
+        Icon(Icons.inventory, size: 30),
+        Icon(Icons.ac_unit, size: 30),
+        Icon(Icons.ac_unit, size: 30)
+      ],
+      letIndexChange: (index) => true,
+      color: Colors.amberAccent,
       onTap: (index) {
         setState(() {
           currentIndex = index;
         });
       },
-      items: [
-        _itemNavigationBar(Icon(Icons.house), Text('Tiendas')),
-        _itemNavigationBar(Icon(Icons.inventory), Text('Pedidos')),
-      ],
-    );
-  }
-
-  _itemNavigationBar(Widget icon, Widget title) {
-    return BottomNavigationBarItem(
-      icon: icon,
-      title: title,
     );
   }
 }
