@@ -1,9 +1,11 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:rickpan_app/src/bloc/scans_bloc.dart';
 
-import 'package:rickpan_app/src/pages/direcciones_page.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+
+import 'package:rickpan_app/src/pages/pedidos_page.dart';
+import 'package:rickpan_app/src/pages/productos_page.dart';
 import 'package:rickpan_app/src/pages/tienda_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,7 +30,9 @@ class _HomePageState extends State<HomePage> {
       case 0:
         return MapasPage();
       case 1:
-        return DireccionesPage();
+        return ProductosPage();
+      case 2:
+        return PedidosPage();
       //break;
       default:
         return MapasPage();
@@ -42,9 +46,9 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Theme.of(context).primaryColor,
       items: [
         Icon(Icons.house, size: 30),
+        Icon(Icons.add_box_sharp, size: 30),
         Icon(Icons.inventory, size: 30),
-        Icon(Icons.ac_unit, size: 30),
-        Icon(Icons.ac_unit, size: 30)
+        Icon(Icons.info_outline, size: 30)
       ],
       color: Colors.amberAccent,
       onTap: (index) {

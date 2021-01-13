@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:rickpan_app/src/pages/home_page.dart';
-import 'package:rickpan_app/src/pages/mapa_page.dart';
-import 'package:super_qr_reader/super_qr_reader.dart';
+import 'package:rickpan_app/src/pages/pedido_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,7 +14,7 @@ class MyApp extends StatelessWidget {
       initialRoute: 'home',
       routes: {
         'home': (BuildContext context) => HomePage(),
-        'mapa': (BuildContext context) => MapaPage(),
+        'pedido': (BuildContext context) => PedidoPage(),
         //'lector': (BuildContext context) => ScanView(),
       },
       theme: ThemeData(
