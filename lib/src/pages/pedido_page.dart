@@ -9,12 +9,6 @@ class PedidoPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Coordenadas QR'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.my_location),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: Center(
         child: Text(scan.valor),

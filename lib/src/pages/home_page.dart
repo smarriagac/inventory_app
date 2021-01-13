@@ -45,10 +45,12 @@ class _HomePageState extends State<HomePage> {
       height: 50.0,
       backgroundColor: Theme.of(context).primaryColor,
       items: [
-        Icon(Icons.house, size: 30),
-        Icon(Icons.add_box_sharp, size: 30),
-        Icon(Icons.inventory, size: 30),
-        Icon(Icons.info_outline, size: 30)
+        Icon(Icons.house, size: 30, color: Theme.of(context).primaryColor),
+        Icon(Icons.add_box_sharp,
+            size: 30, color: Theme.of(context).primaryColor),
+        Icon(Icons.inventory, size: 30, color: Theme.of(context).primaryColor),
+        Icon(Icons.info_outline,
+            size: 30, color: Theme.of(context).primaryColor)
       ],
       color: Colors.amberAccent,
       onTap: (index) {

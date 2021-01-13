@@ -48,7 +48,8 @@ class _MapasPageState extends State<MapasPage> {
               itemCount: scans.length,
               itemBuilder: (context, i) => Dismissible(
                     key: UniqueKey(),
-                    background: Container(color: Colors.red),
+                    background:
+                        Container(color: Theme.of(context).primaryColor),
                     onDismissed: (direction) =>
                         scansBloc.borrarScan(scans[i].id),
                     child: Column(
