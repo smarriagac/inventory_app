@@ -69,7 +69,11 @@ class _ProductosPageState extends State<ProductosPage> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)),
             child: ListTile(
-                title: Text('Precio del producto'), subtitle: Text('230450')),
+                title: Text(
+                  'Precio del producto',
+                  style: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
+                ),
+                subtitle: Text('230450')),
           ),
         ],
       ),
