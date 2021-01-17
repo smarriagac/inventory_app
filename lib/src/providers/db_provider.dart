@@ -7,6 +7,9 @@ import 'package:sqflite/sqflite.dart';
 import 'package:rickpan_app/src/models/scan_model.dart';
 export 'package:rickpan_app/src/models/scan_model.dart';
 
+import 'package:rickpan_app/src/models/producto_model.dart';
+export 'package:rickpan_app/src/models/producto_model.dart';
+
 class DBprovider {
   static Database _darabase;
   static final DBprovider db = DBprovider._();
@@ -29,7 +32,7 @@ class DBprovider {
 
     return await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onOpen: (db) {},
       onCreate: (db, version) async {
         await db.execute('CREATE TABLE Scans ('
@@ -37,11 +40,18 @@ class DBprovider {
             ' tipo TEXT,'
             ' valor TEXT'
             ')');
+        await db.execute('CREATE TABLE Inventario ('
+            ' idProducto INTEGER PRIMARY KEY,'
+            ' producto TEXT,'
+            ' precio INTEGER'
+            ')');
       },
     );
   }
 
-  // CREAR REGISTRO EN LA BASE DE DATOS
+  // ============================================================================
+  // ================== CREAR REGISTRO EN LA BASE DE DATOS TABLA 1 ==============
+  // ============================================================================
 
   // forma 1
 
@@ -110,6 +120,58 @@ class DBprovider {
   Future<int> deleteAll() async {
     final db = await database;
     final res = await db.delete('Scans');
+    return res;
+  }
+  // =========================================================================
+  // =============== CREAR REGISTRO EN LA BASE DE DATOS TABLA 2 ==============
+  // =========================================================================
+
+  // insertar datos
+  nuevoProducto(ProductosModel nuevoProducto) async {
+    final db = await database;
+    final res = await db.insert('Inventario', nuevoProducto.toJson());
+    return res;
+  }
+
+  // consultar datos
+  Future<List<ProductosModel>> getTodosProductos() async {
+    final db = await database;
+    final res = await db.query('Inventario');
+
+    List<ProductosModel> list = res.isNotEmpty
+        ? res.map((e) => ProductosModel.fromJson(e)).toList()
+        : [];
+
+    return list;
+  }
+
+  Future<ProductosModel> getProductosId(int id) async {
+    final db = await database;
+    final res =
+        await db.query('Inventario', where: 'idProducto= ?', whereArgs: [id]);
+    return res.isEmpty ? ProductosModel.fromJson(res.first) : null;
+  }
+
+  // eliminar por id
+  Future<int> deleteProductos(int idProducto) async {
+    final db = await database;
+    final res = await db
+        .delete('Inventario', where: 'idProducto = ?', whereArgs: [idProducto]);
+    return res;
+  }
+
+  // eliminar todos los datos
+  Future<int> deleteAllProductos() async {
+    final db = await database;
+    final res = await db.delete('Inventario');
+    return res;
+  }
+
+  // actualizar datos
+  Future<int> updateProducto(ProductosModel nuevoProducto) async {
+    final db = await database;
+    final res = await db.update('Scans', nuevoProducto.toJson(),
+        where: 'idProducto = ?', whereArgs: [nuevoProducto.idProducto]);
     return res;
   }
 }
