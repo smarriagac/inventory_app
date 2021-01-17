@@ -39,9 +39,7 @@ class _MapasPageState extends State<MapasPage> {
           }
           final scans = snapshot.data;
           if (scans.length == 0) {
-            return Center(
-              child: Text('No hay informacion'),
-            );
+            return Center(child: Text('No hay informacion'));
           }
           return ListView.builder(
               padding: EdgeInsets.all(5.0),

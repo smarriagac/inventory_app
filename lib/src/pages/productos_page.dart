@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rickpan_app/src/bloc/productos_bloc.dart';
+import 'package:rickpan_app/src/providers/db_provider.dart';
 
 class ProductosPage extends StatefulWidget {
   @override
@@ -6,26 +8,39 @@ class ProductosPage extends StatefulWidget {
 }
 
 class _ProductosPageState extends State<ProductosPage> {
+  final productosBloc = new ProductosBloc();
   String _producto = '';
   String _precio = '';
 
   @override
   Widget build(BuildContext context) {
+    productosBloc.obtenerProducto();
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Productos'),
-      ),
-      body: Column(
-        children: [
-          SizedBox(height: 10.0),
-          _nombredelProducto(),
-          SizedBox(height: 20.0),
-          _preciodelProducto(),
-          Divider(color: Theme.of(context).primaryColor, height: 20.0),
-          _productosAgregados(),
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: Text('Productos'),
+        ),
+        body: StreamBuilder<List<ProductosModel>>(
+          stream: productosBloc.productoStream,
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(child: CircularProgressIndicator());
+            }
+            final productoS = snapshot.data;
+            if (productoS.length == 0) {
+              return Center(child: Text('No hay productos agregados'));
+            }
+            return Column(
+              children: [
+                SizedBox(height: 10.0),
+                _nombredelProducto(),
+                SizedBox(height: 20.0),
+                _preciodelProducto(),
+                Divider(color: Theme.of(context).primaryColor, height: 20.0),
+                _productosAgregados(productoS),
+              ],
+            );
+          },
+        ));
   }
 
   Widget _nombredelProducto() {
@@ -60,23 +75,31 @@ class _ProductosPageState extends State<ProductosPage> {
             }));
   }
 
-  Widget _productosAgregados() {
+  Widget _productosAgregados(List<ProductosModel> productoS) {
     return Flexible(
-      child: ListView(
-        children: [
-          Card(
-            elevation: 15.0,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
-            child: ListTile(
-                title: Text(
-                  'Precio del producto',
-                  style: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
-                ),
-                subtitle: Text('230450')),
-          ),
-        ],
+      child: ListView.builder(
+        itemCount: productoS.length,
+        itemBuilder: (context, i) => Dismissible(
+          key: UniqueKey(),
+          background: Container(color: Theme.of(context).primaryColor),
+          onDismissed: (direction) =>
+              productosBloc.borrarProducto(productoS[i].idProducto),
+          child: _infoProducto(context, productoS, i),
+        ),
       ),
+    );
+  }
+
+  _infoProducto(BuildContext context, List<ProductosModel> productoS, int i) {
+    return Card(
+      elevation: 15.0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      child: ListTile(
+          title: Text(
+            productoS[i].producto,
+            style: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
+          ),
+          subtitle: Text('PRECIO: ${productoS[i].precio}')),
     );
   }
 }
