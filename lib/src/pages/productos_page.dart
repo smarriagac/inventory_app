@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:rickpan_app/src/bloc/productos_bloc.dart';
 import 'package:rickpan_app/src/providers/db_provider.dart';
 
@@ -26,15 +27,17 @@ class _ProductosPageState extends State<ProductosPage> {
               return Center(child: CircularProgressIndicator());
             }
             final productoS = snapshot.data;
-            if (productoS.length == 0) {
+/*             if (productoS.length == 0) {
               return Center(child: Text('No hay productos agregados'));
-            }
+            } */
             return Column(
               children: [
                 SizedBox(height: 10.0),
                 _nombredelProducto(),
                 SizedBox(height: 20.0),
                 _preciodelProducto(),
+                SizedBox(height: 20.0),
+                _botonAgregarProducto(),
                 Divider(color: Theme.of(context).primaryColor, height: 20.0),
                 _productosAgregados(productoS),
               ],
@@ -61,7 +64,7 @@ class _ProductosPageState extends State<ProductosPage> {
 
   Widget _preciodelProducto() {
     return TextField(
-        obscureText: true,
+        keyboardType: TextInputType.number,
         decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20.0),
@@ -75,7 +78,32 @@ class _ProductosPageState extends State<ProductosPage> {
             }));
   }
 
+  Widget _botonAgregarProducto() {
+    return RaisedButton(
+      elevation: 20.0,
+      color: Theme.of(context).primaryColor,
+      child: Text('Agregar producto'),
+      textColor: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      onPressed: _validaciondeDatos,
+    );
+  }
+
+  _validaciondeDatos() {
+    setState(() {});
+    if (_producto != null && _precio != null) {
+      print(_producto);
+      print(_precio);
+    }
+    if (_producto == '' && _precio == '') {
+      print('ni verga');
+    }
+  }
+
   Widget _productosAgregados(List<ProductosModel> productoS) {
+    if (productoS.length == 0) {
+      return Center(child: Text('No hay productos agregados'));
+    }
     return Flexible(
       child: ListView.builder(
         itemCount: productoS.length,
