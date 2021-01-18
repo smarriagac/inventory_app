@@ -12,6 +12,16 @@ class _ProductosPageState extends State<ProductosPage> {
   final productosBloc = new ProductosBloc();
   String _producto = '';
   String _precio = '';
+  TextEditingController _controller;
+  TextEditingController _controller2;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _controller = TextEditingController();
+    _controller2 = TextEditingController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +29,12 @@ class _ProductosPageState extends State<ProductosPage> {
     return Scaffold(
         appBar: AppBar(
           title: Text('Productos'),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.delete_forever),
+              onPressed: productosBloc.borrarTODOS,
+            )
+          ],
         ),
         body: StreamBuilder<List<ProductosModel>>(
           stream: productosBloc.productoStream,
@@ -49,6 +65,7 @@ class _ProductosPageState extends State<ProductosPage> {
   Widget _nombredelProducto() {
     return TextField(
         keyboardType: TextInputType.text,
+        controller: _controller,
         decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20.0),
@@ -65,6 +82,7 @@ class _ProductosPageState extends State<ProductosPage> {
   Widget _preciodelProducto() {
     return TextField(
         keyboardType: TextInputType.number,
+        controller: _controller2,
         decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20.0),
@@ -90,10 +108,15 @@ class _ProductosPageState extends State<ProductosPage> {
   }
 
   _validaciondeDatos() {
-    setState(() {});
-    if (_producto != null && _precio != null) {
+    int procioInt = int.parse(_precio);
+    if (_producto != null && procioInt != null) {
       print(_producto);
-      print(_precio);
+      print(procioInt);
+      final addproducto =
+          ProductosModel(producto: _producto, precio: procioInt);
+      productosBloc.agregarProducto(addproducto);
+      _controller.clear();
+      _controller2.clear();
     }
     if (_producto == '' && _precio == '') {
       print('ni verga');
