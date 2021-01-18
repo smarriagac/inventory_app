@@ -109,17 +109,17 @@ class _ProductosPageState extends State<ProductosPage> {
 
   _validaciondeDatos() {
     int procioInt = int.parse(_precio);
-    if (_producto != null && procioInt != null) {
-      print(_producto);
-      print(procioInt);
+    if (_producto.isNotEmpty && _precio.isNotEmpty) {
+/*       print(_producto);
+      print(procioInt); */
       final addproducto =
           ProductosModel(producto: _producto, precio: procioInt);
       productosBloc.agregarProducto(addproducto);
       _controller.clear();
       _controller2.clear();
     }
-    if (_producto == '' && _precio == '') {
-      print('ni verga');
+    if (_producto.isEmpty && _precio.isEmpty) {
+/*       print('ni verga'); */
     }
   }
 
