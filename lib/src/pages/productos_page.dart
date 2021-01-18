@@ -118,9 +118,6 @@ class _ProductosPageState extends State<ProductosPage> {
       _controller.clear();
       _controller2.clear();
     }
-    if (_producto.isEmpty && _precio.isEmpty) {
-/*       print('ni verga'); */
-    }
   }
 
   Widget _productosAgregados(List<ProductosModel> productoS) {
