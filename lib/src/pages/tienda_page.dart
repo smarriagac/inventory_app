@@ -68,7 +68,7 @@ class _MapasPageState extends State<MapasPage> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
       child: ListTile(
         onTap: () => utils.abrirScan(context, scans[i]),
-        leading: Icon(Icons.house, color: Theme.of(context).primaryColor),
+        leading: Image.asset('assets/store.png'),
         title: Text(scans[i].valor,
             style: TextStyle(fontSize: 15.0, fontStyle: FontStyle.italic)),
         subtitle: Text('ID: ${scans[i].id}'),

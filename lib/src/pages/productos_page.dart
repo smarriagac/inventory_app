@@ -97,13 +97,17 @@ class _ProductosPageState extends State<ProductosPage> {
   }
 
   Widget _botonAgregarProducto() {
-    return RaisedButton(
-      elevation: 20.0,
-      color: Theme.of(context).primaryColor,
-      child: Text('Agregar producto'),
-      textColor: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-      onPressed: _validaciondeDatos,
+    return Align(
+      alignment: Alignment.centerRight,
+      child: RaisedButton(
+        elevation: 20.0,
+        color: Theme.of(context).primaryColor,
+        child: Text('Agregar producto'),
+        textColor: Colors.white,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        onPressed: _validaciondeDatos,
+      ),
     );
   }
 
@@ -143,6 +147,7 @@ class _ProductosPageState extends State<ProductosPage> {
       elevation: 15.0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       child: ListTile(
+          leading: Image.asset('assets/cookies.png'),
           title: Text(
             productoS[i].producto,
             style: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),

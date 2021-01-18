@@ -7,6 +7,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:rickpan_app/src/pages/pedidos_page.dart';
 import 'package:rickpan_app/src/pages/productos_page.dart';
 import 'package:rickpan_app/src/pages/tienda_page.dart';
+import 'package:rickpan_app/src/pages/Info_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -33,6 +34,8 @@ class _HomePageState extends State<HomePage> {
         return ProductosPage();
       case 2:
         return PedidosPage();
+      case 3:
+        return InfoPage();
       //break;
       default:
         return MapasPage();
