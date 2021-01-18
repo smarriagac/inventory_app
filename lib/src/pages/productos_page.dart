@@ -145,7 +145,8 @@ class _ProductosPageState extends State<ProductosPage> {
   _infoProducto(BuildContext context, List<ProductosModel> productoS, int i) {
     return Card(
       elevation: 15.0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      margin: EdgeInsets.all(5.0),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
       child: ListTile(
           leading: Image.asset('assets/cookies.png'),
           title: Text(
