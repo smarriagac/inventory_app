@@ -153,7 +153,7 @@ class _ProductosPageState extends State<ProductosPage> {
             productoS[i].producto,
             style: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
           ),
-          subtitle: Text('PRECIO: ${productoS[i].precio}')),
+          subtitle: Text('Precio: ${productoS[i].precio}')),
     );
   }
 }
