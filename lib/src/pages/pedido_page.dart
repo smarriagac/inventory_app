@@ -11,6 +11,7 @@ class PedidoPage extends StatefulWidget {
 
 class _PedidoPageState extends State<PedidoPage> {
   final productosBloc = new ProductosBloc();
+  //final _cantidad = new Cantidad();
   int _cantidad = 0;
   @override
   Widget build(BuildContext context) {
@@ -126,9 +127,9 @@ class _PedidoPageState extends State<PedidoPage> {
       onPressed: () {
         setState(() {
           _cantidad--;
-          if (_cantidad <= 0) {
+/*           if (_cantidad <= 0) {
             _cantidad = 0;
-          }
+          } */
         });
       },
     );
