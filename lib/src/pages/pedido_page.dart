@@ -127,9 +127,9 @@ class _PedidoPageState extends State<PedidoPage> {
       onPressed: () {
         setState(() {
           _cantidad--;
-/*           if (_cantidad <= 0) {
+          if (_cantidad <= 0) {
             _cantidad = 0;
-          } */
+          }
         });
       },
     );

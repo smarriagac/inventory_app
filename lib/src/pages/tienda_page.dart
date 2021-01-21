@@ -42,21 +42,20 @@ class _MapasPageState extends State<MapasPage> {
             return Center(child: Text('No hay informacion'));
           }
           return ListView.builder(
-              padding: EdgeInsets.all(5.0),
-              itemCount: scans.length,
-              itemBuilder: (context, i) => Dismissible(
-                    key: UniqueKey(),
-                    background:
-                        Container(color: Theme.of(context).primaryColor),
-                    onDismissed: (direction) =>
-                        scansBloc.borrarScan(scans[i].id),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 5),
-                        _infoTarjeta(context, scans, i),
-                      ],
-                    ),
-                  ));
+            padding: EdgeInsets.all(5.0),
+            itemCount: scans.length,
+            itemBuilder: (context, i) => Dismissible(
+              key: UniqueKey(),
+              background: Container(color: Theme.of(context).primaryColor),
+              onDismissed: (direction) => scansBloc.borrarScan(scans[i].id),
+              child: Column(
+                children: [
+                  SizedBox(height: 5),
+                  _infoTarjeta(context, scans, i),
+                ],
+              ),
+            ),
+          );
         },
       ),
     );
