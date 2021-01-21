@@ -66,6 +66,7 @@ class _PedidoPageState extends State<PedidoPage> {
   }
 
   _productosPedidos(BuildContext context, List<ProductosModel> pedidoS, int i) {
+    List<int> cantidadPedido = List<int>(pedidoS.length);
     return Card(
       elevation: 15.0,
       margin: EdgeInsets.all(5.0),
@@ -74,7 +75,7 @@ class _PedidoPageState extends State<PedidoPage> {
         children: [
           _r1(context, pedidoS, i),
           Divider(color: Theme.of(context).primaryColor, height: 20.0),
-          _r2(context, pedidoS, i),
+          _r2(context, pedidoS, i, cantidadPedido),
         ],
       ),
     );
@@ -95,40 +96,48 @@ class _PedidoPageState extends State<PedidoPage> {
     );
   }
 
-  _r2(BuildContext context, List<ProductosModel> pedidoS, int i) {
-    return Row(
-      children: [
-        _iconosIncremento(Icons.add_box, i),
-        Text(
-          _cantidad.toString(),
-          style: TextStyle(fontSize: 18.0),
-        ),
-        _iconoDecremento(Icons.indeterminate_check_box, i),
-      ],
+  _r2(BuildContext context, List<ProductosModel> pedidoS, int i,
+      List<int> cantidadPedido) {
+    return Card(
+      color: Colors.brown[300],
+      margin: EdgeInsets.all(5.0),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
+      child: Row(
+        children: [
+          _iconosIncremento(Icons.add_box_rounded, i, cantidadPedido),
+          Text(
+            _cantidad.toString(),
+            style: TextStyle(fontSize: 18.0),
+          ),
+          _iconoDecremento(Icons.indeterminate_check_box, i, cantidadPedido),
+        ],
+      ),
     );
   }
 
-  _iconosIncremento(IconData icono, int i) {
+  _iconosIncremento(IconData icono, int i, List<int> cantidadPedido) {
     return IconButton(
       icon: Icon(icono),
-      iconSize: 30.0,
+      iconSize: 25.0,
       onPressed: () {
         setState(() {
-          _cantidad++;
+          cantidadPedido[i] = _cantidad++;
+          print('Incremento[$i] : ${cantidadPedido}');
         });
       },
     );
   }
 
-  _iconoDecremento(IconData decremento, int i) {
+  _iconoDecremento(IconData decremento, int i, List<int> cantidadPedido) {
     return IconButton(
       icon: Icon(decremento),
-      iconSize: 30.0,
+      iconSize: 25.0,
       onPressed: () {
         setState(() {
-          _cantidad--;
+          cantidadPedido[i] = _cantidad--;
+          print('Decremento [$i] : ${cantidadPedido[i]}');
           if (_cantidad <= 0) {
-            _cantidad = 0;
+            cantidadPedido[i] = 0;
           }
         });
       },
