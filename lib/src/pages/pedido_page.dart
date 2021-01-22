@@ -139,7 +139,7 @@ class _PedidoPageState extends State<PedidoPage> {
       onPressed: () {
         setState(() {
           _carrito[i].cantidad++;
-          print('Incremento[$i] : ${_carrito[i].cantidad}');
+          print('Incremento[$i] : ${_carrito[i]}');
         });
       },
     );
@@ -152,7 +152,7 @@ class _PedidoPageState extends State<PedidoPage> {
       onPressed: () {
         setState(() {
           _carrito[i].cantidad--;
-          print('Decremento [$i] : ${_carrito[i].cantidad}');
+          print('Decremento [$i] : ${_carrito[i]}');
 /*           if (_cantidad <= 0) {
             cantidadPedido[i] = 0;
           } */

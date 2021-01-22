@@ -1,5 +1,7 @@
+import 'package:flutter/widgets.dart';
+
 class CarritoModel {
   int cantidad;
 
-  CarritoModel({this.cantidad = 0});
+  CarritoModel({@required this.cantidad = 1});
 }
