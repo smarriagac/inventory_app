@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:rickpan_app/src/models/scan_model.dart';
 import 'package:rickpan_app/src/bloc/productos_bloc.dart';
 import 'package:rickpan_app/src/providers/db_provider.dart';
+import 'package:spinner_input/spinner_input.dart';
 
 class PedidoPage extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class _PedidoPageState extends State<PedidoPage> {
   final productosBloc = new ProductosBloc();
   //final _cantidad = new Cantidad();
   int _cantidad = 0;
+  double _spinner = 0;
   @override
   Widget build(BuildContext context) {
     productosBloc.obtenerProducto();
@@ -104,15 +106,29 @@ class _PedidoPageState extends State<PedidoPage> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
       child: Row(
         children: [
-          _iconosIncremento(Icons.add_box_rounded, i, cantidadPedido),
+/*           _iconosIncremento(Icons.add_box_rounded, i, cantidadPedido),
           Text(
             _cantidad.toString(),
             style: TextStyle(fontSize: 18.0),
           ),
-          _iconoDecremento(Icons.indeterminate_check_box, i, cantidadPedido),
+          _iconoDecremento(Icons.indeterminate_check_box, i, cantidadPedido), */
+          _prueba(),
         ],
       ),
     );
+  }
+
+  _prueba() {
+    return Container(
+        margin: EdgeInsets.all(5.0),
+        child: SpinnerInput(
+          spinnerValue: _spinner,
+          onChange: (newValue) {
+            setState(() {
+              _spinner = newValue;
+            });
+          },
+        ));
   }
 
   _iconosIncremento(IconData icono, int i, List<int> cantidadPedido) {
