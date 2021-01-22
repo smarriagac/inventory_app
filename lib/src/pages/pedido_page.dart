@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rickpan_app/src/models/carrito_model.dart';
 
 import 'package:rickpan_app/src/models/scan_model.dart';
 import 'package:rickpan_app/src/bloc/productos_bloc.dart';
@@ -12,6 +13,7 @@ class PedidoPage extends StatefulWidget {
 
 class _PedidoPageState extends State<PedidoPage> {
   final productosBloc = new ProductosBloc();
+  List<CarritoModel> _carrito;
   //final _cantidad = new Cantidad();
   int _cantidad = 0;
   double _spinner = 0;
@@ -106,13 +108,12 @@ class _PedidoPageState extends State<PedidoPage> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
       child: Row(
         children: [
-/*           _iconosIncremento(Icons.add_box_rounded, i, cantidadPedido),
+          _iconosIncremento(Icons.add_box_rounded, i, cantidadPedido),
           Text(
             _cantidad.toString(),
             style: TextStyle(fontSize: 18.0),
           ),
-          _iconoDecremento(Icons.indeterminate_check_box, i, cantidadPedido), */
-          _prueba(),
+          _iconoDecremento(Icons.indeterminate_check_box, i, cantidadPedido),
         ],
       ),
     );
@@ -137,8 +138,8 @@ class _PedidoPageState extends State<PedidoPage> {
       iconSize: 25.0,
       onPressed: () {
         setState(() {
-          cantidadPedido[i] = _cantidad++;
-          print('Incremento[$i] : ${cantidadPedido}');
+          _carrito[i].cantidad++;
+          print('Incremento[$i] : ${_carrito[i].cantidad}');
         });
       },
     );
@@ -150,11 +151,11 @@ class _PedidoPageState extends State<PedidoPage> {
       iconSize: 25.0,
       onPressed: () {
         setState(() {
-          cantidadPedido[i] = _cantidad--;
-          print('Decremento [$i] : ${cantidadPedido[i]}');
-          if (_cantidad <= 0) {
+          _carrito[i].cantidad--;
+          print('Decremento [$i] : ${_carrito[i].cantidad}');
+/*           if (_cantidad <= 0) {
             cantidadPedido[i] = 0;
-          }
+          } */
         });
       },
     );
