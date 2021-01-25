@@ -1,7 +1,15 @@
-import 'package:flutter/widgets.dart';
+class CantidadP {
+  CantidadP({
+    this.cantidad = 0,
+  });
 
-class CarritoModel {
   int cantidad;
 
-  CarritoModel({@required this.cantidad = 1});
+  void incrementarCantidad() {
+    this.cantidad = this.cantidad + 1;
+  }
+
+  void decrementarCantidad() {
+    this.cantidad = this.cantidad - 1;
+  }
 }
