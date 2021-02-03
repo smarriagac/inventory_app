@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_cart/flutter_cart.dart';
 import 'package:rickpan_app/src/models/carrito_model.dart';
@@ -16,9 +14,17 @@ class PedidoPage extends StatefulWidget {
 
 class _PedidoPageState extends State<PedidoPage> {
   final productosBloc = new ProductosBloc();
-  List<CantidadP> _nproducto = [];
+  //List<CantidadP> _nproducto;
   //final _cantidad = new Cantidad();
   double _spinner = 0;
+  List<ProductosModel> pedidoS;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     productosBloc.obtenerProducto();
@@ -72,7 +78,7 @@ class _PedidoPageState extends State<PedidoPage> {
   }
 
   _productosPedidos(BuildContext context, List<ProductosModel> pedidoS, int i) {
-    List<int> cantidadPedido = List<int>(pedidoS.length);
+    List<CantidadP> cantidadPedido = List<CantidadP>(pedidoS.length);
     return Card(
       elevation: 15.0,
       margin: EdgeInsets.all(5.0),
@@ -101,16 +107,19 @@ class _PedidoPageState extends State<PedidoPage> {
   }
 
   _r2(BuildContext context, List<ProductosModel> pedidoS, int i,
-      List<int> cantidadPedido) {
+      List<CantidadP> cantidadPedido) {
     return Card(
       color: Colors.brown[300],
       margin: EdgeInsets.all(5.0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
       child: Row(
         children: [
-          _iconosIncremento(Icons.add_box_rounded, i, pedidoS),
-          Text('${i}', style: TextStyle(fontSize: 18.0)),
-          _iconoDecremento(Icons.indeterminate_check_box, i, pedidoS),
+/*           _iconosIncremento(Icons.add_box_rounded, i, pedidoS, cantidadPedido),
+          
+          Text('${cantidadPedido[i].cantidad}',
+              style: TextStyle(fontSize: 18.0)),
+          _iconoDecremento(Icons.indeterminate_check_box, i, pedidoS), */
+          _prueba(),
         ],
       ),
     );
@@ -129,14 +138,15 @@ class _PedidoPageState extends State<PedidoPage> {
         ));
   }
 
-  _iconosIncremento(IconData icono, int i, List<ProductosModel> pedidoS) {
+  _iconosIncremento(IconData icono, int i, List<ProductosModel> pedidoS,
+      List<CantidadP> cantidadPedido) {
     return IconButton(
       icon: Icon(icono),
       iconSize: 25.0,
       onPressed: () {
         setState(() {
-          _nproducto[i].cantidad++;
-          print('Incremento[$i] : ${_nproducto[i].cantidad}');
+          cantidadPedido[i].cantidad++;
+          print('Incremento[$i] : ${cantidadPedido[i].cantidad}');
         });
       },
     );
