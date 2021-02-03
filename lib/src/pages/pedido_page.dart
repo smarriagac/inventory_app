@@ -16,7 +16,7 @@ class PedidoPage extends StatefulWidget {
 
 class _PedidoPageState extends State<PedidoPage> {
   final productosBloc = new ProductosBloc();
-  List<CantidadP> _cantidad = [];
+  List<CantidadP> _nproducto = [];
   //final _cantidad = new Cantidad();
   double _spinner = 0;
   @override
@@ -135,8 +135,8 @@ class _PedidoPageState extends State<PedidoPage> {
       iconSize: 25.0,
       onPressed: () {
         setState(() {
-          _cantidad[i].cantidad++;
-          print('Incremento[$i] : ${_cantidad[i].cantidad}');
+          _nproducto[i].cantidad++;
+          print('Incremento[$i] : ${_nproducto[i].cantidad}');
         });
       },
     );
