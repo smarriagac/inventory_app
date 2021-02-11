@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_cart/flutter_cart.dart';
 import 'package:rickpan_app/src/models/carrito_model.dart';
 
@@ -23,7 +24,7 @@ class _PedidoPageState extends State<PedidoPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _canditadProducto();
+    _canditadProducto(pedidoS);
   }
 
   @override
@@ -58,10 +59,8 @@ class _PedidoPageState extends State<PedidoPage> {
       elevation: 15.0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       child: Align(
-        child: Text(
-          scan.valor,
-          style: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
-        ),
+        child: Text(scan.valor,
+            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
         alignment: Alignment.topLeft,
       ),
     );
@@ -79,7 +78,6 @@ class _PedidoPageState extends State<PedidoPage> {
   }
 
   _productosPedidos(BuildContext context, List<ProductosModel> pedidoS, int i) {
-    List<CantidadP> cantidadPedido = List<CantidadP>(pedidoS.length);
     return Card(
       elevation: 15.0,
       margin: EdgeInsets.all(5.0),
@@ -88,7 +86,7 @@ class _PedidoPageState extends State<PedidoPage> {
         children: [
           _r1(context, pedidoS, i),
           Divider(color: Theme.of(context).primaryColor, height: 20.0),
-          _r2(context, pedidoS, i, cantidadPedido),
+          _r2(context, pedidoS, i),
         ],
       ),
     );
@@ -97,27 +95,29 @@ class _PedidoPageState extends State<PedidoPage> {
   _r1(BuildContext context, List<ProductosModel> pedidoS, int i) {
     return Expanded(
       child: ListTile(
-        title: Text(
-          'Producto: ${pedidoS[i].producto}',
-          style: TextStyle(fontSize: 19.0, fontStyle: FontStyle.italic),
-        ),
-        subtitle: Text('Precio: ${pedidoS[i].precio}',
-            style: TextStyle(fontSize: 17.0)),
-      ),
+          title: Text('${pedidoS[i].producto}',
+              style: TextStyle(fontSize: 19.0, fontWeight: FontWeight.bold)),
+          subtitle:
+              Text('${pedidoS[i].precio}', style: TextStyle(fontSize: 17.0))),
     );
   }
 
-  _r2(BuildContext context, List<ProductosModel> pedidoS, int i,
-      List<CantidadP> cantidadPedido) {
+  _r2(BuildContext context, List<ProductosModel> pedidoS, int i) {
     return Card(
-      color: Colors.brown[300],
+      color: Colors.brown[500],
+      semanticContainer: true,
       margin: EdgeInsets.all(5.0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100.0)),
       child: Row(
         children: [
-          _iconosIncremento(Icons.add_box_rounded, i, pedidoS, cantidadPedido),
-          Text('${_nproducto[i].cantidad}', style: TextStyle(fontSize: 18.0)),
-          _iconoDecremento(Icons.indeterminate_check_box, i, pedidoS),
+          _iconoDecremento(Icons.remove, i, pedidoS),
+          Text('${_nproducto[i].cantidad}',
+              style: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold)),
+          _iconosIncremento(Icons.add, i, pedidoS),
+
           // _prueba(),
         ],
       ),
@@ -137,15 +137,16 @@ class _PedidoPageState extends State<PedidoPage> {
         ));
   }
 
-  _iconosIncremento(IconData icono, int i, List<ProductosModel> pedidoS,
-      List<CantidadP> cantidadPedido) {
+  _iconosIncremento(IconData icono, int i, List<ProductosModel> pedidoS) {
     return IconButton(
       icon: Icon(icono),
-      iconSize: 25.0,
+      iconSize: 20.0,
+      color: Colors.amber,
       onPressed: () {
         setState(() {
           _nproducto[i].cantidad++;
           print('Incremento[$i] : ${_nproducto[i].cantidad}');
+          print('Precio[$i] : ${_nproducto[i].cantidad * pedidoS[i].precio}');
         });
       },
     );
@@ -154,10 +155,12 @@ class _PedidoPageState extends State<PedidoPage> {
   _iconoDecremento(IconData decremento, int i, List<ProductosModel> pedidoS) {
     return IconButton(
       icon: Icon(decremento),
-      iconSize: 25.0,
+      color: Colors.amber,
+      iconSize: 20.0,
       onPressed: () {
         setState(() {
           print('Decremento [$i] : ${_nproducto[i].cantidad}');
+          print('Precio[$i] : ${_nproducto[i].cantidad * pedidoS[i].precio}');
           _nproducto[i].cantidad--;
           if (_nproducto[i].cantidad <= 0) {
             _nproducto[i].cantidad = 0;
@@ -167,12 +170,43 @@ class _PedidoPageState extends State<PedidoPage> {
     );
   }
 
-  void _canditadProducto() {
+  void _canditadProducto(List<ProductosModel> pedidoS) {
+/*     for (var i = 0; i < pedidoS.length; i++) {
+      var list = <CantidadP>[];
+    } */
     var list = <CantidadP>[
       CantidadP(cantidad: 0),
       CantidadP(cantidad: 0),
-      CantidadP(cantidad: 0)
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
     ];
+
     setState(() {
       _nproducto = list;
     });
