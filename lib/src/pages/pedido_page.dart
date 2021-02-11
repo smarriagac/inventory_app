@@ -14,7 +14,7 @@ class PedidoPage extends StatefulWidget {
 
 class _PedidoPageState extends State<PedidoPage> {
   final productosBloc = new ProductosBloc();
-  //List<CantidadP> _nproducto;
+  List<CantidadP> _nproducto = List<CantidadP>();
   //final _cantidad = new Cantidad();
   double _spinner = 0;
   List<ProductosModel> pedidoS;
@@ -23,6 +23,7 @@ class _PedidoPageState extends State<PedidoPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _canditadProducto();
   }
 
   @override
@@ -114,12 +115,10 @@ class _PedidoPageState extends State<PedidoPage> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
       child: Row(
         children: [
-/*           _iconosIncremento(Icons.add_box_rounded, i, pedidoS, cantidadPedido),
-          
-          Text('${cantidadPedido[i].cantidad}',
-              style: TextStyle(fontSize: 18.0)),
-          _iconoDecremento(Icons.indeterminate_check_box, i, pedidoS), */
-          _prueba(),
+          _iconosIncremento(Icons.add_box_rounded, i, pedidoS, cantidadPedido),
+          Text('${_nproducto[i].cantidad}', style: TextStyle(fontSize: 18.0)),
+          _iconoDecremento(Icons.indeterminate_check_box, i, pedidoS),
+          // _prueba(),
         ],
       ),
     );
@@ -145,8 +144,8 @@ class _PedidoPageState extends State<PedidoPage> {
       iconSize: 25.0,
       onPressed: () {
         setState(() {
-          cantidadPedido[i].cantidad++;
-          print('Incremento[$i] : ${cantidadPedido[i].cantidad}');
+          _nproducto[i].cantidad++;
+          print('Incremento[$i] : ${_nproducto[i].cantidad}');
         });
       },
     );
@@ -158,12 +157,24 @@ class _PedidoPageState extends State<PedidoPage> {
       iconSize: 25.0,
       onPressed: () {
         setState(() {
-          print('Decremento [$i] : ${pedidoS[i]}');
-/*           if (_cantidad <= 0) {
-            cantidadPedido[i] = 0;
-          } */
+          print('Decremento [$i] : ${_nproducto[i].cantidad}');
+          _nproducto[i].cantidad--;
+          if (_nproducto[i].cantidad <= 0) {
+            _nproducto[i].cantidad = 0;
+          }
         });
       },
     );
+  }
+
+  void _canditadProducto() {
+    var list = <CantidadP>[
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0),
+      CantidadP(cantidad: 0)
+    ];
+    setState(() {
+      _nproducto = list;
+    });
   }
 }
