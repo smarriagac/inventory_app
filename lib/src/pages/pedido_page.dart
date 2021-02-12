@@ -87,6 +87,8 @@ class _PedidoPageState extends State<PedidoPage> {
           _r1(context, pedidoS, i),
           Divider(color: Theme.of(context).primaryColor, height: 20.0),
           _r2(context, pedidoS, i),
+          Divider(color: Theme.of(context).primaryColor, height: 20.0),
+          _r3(context, pedidoS, i),
         ],
       ),
     );
@@ -124,19 +126,6 @@ class _PedidoPageState extends State<PedidoPage> {
     );
   }
 
-  _prueba() {
-    return Container(
-        margin: EdgeInsets.all(5.0),
-        child: SpinnerInput(
-          spinnerValue: _spinner,
-          onChange: (newValue) {
-            setState(() {
-              _spinner = newValue;
-            });
-          },
-        ));
-  }
-
   _iconosIncremento(IconData icono, int i, List<ProductosModel> pedidoS) {
     return IconButton(
       icon: Icon(icono),
@@ -146,7 +135,6 @@ class _PedidoPageState extends State<PedidoPage> {
         setState(() {
           _nproducto[i].cantidad++;
           print('Incremento[$i] : ${_nproducto[i].cantidad}');
-          print('Precio[$i] : ${_nproducto[i].cantidad * pedidoS[i].precio}');
         });
       },
     );
@@ -160,13 +148,29 @@ class _PedidoPageState extends State<PedidoPage> {
       onPressed: () {
         setState(() {
           print('Decremento [$i] : ${_nproducto[i].cantidad}');
-          print('Precio[$i] : ${_nproducto[i].cantidad * pedidoS[i].precio}');
           _nproducto[i].cantidad--;
           if (_nproducto[i].cantidad <= 0) {
             _nproducto[i].cantidad = 0;
           }
         });
       },
+    );
+  }
+
+  _r3(BuildContext context, List<ProductosModel> pedidoS, int i) {
+    return Expanded(
+      child: Column(
+        children: [
+          Text('Total',
+              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+          SizedBox(height: 10.0),
+          Container(
+            child: Text('${_nproducto[i].cantidad * pedidoS[i].precio}',
+                style: TextStyle(fontSize: 16.0)),
+            color: Colors.red,
+          )
+        ],
+      ),
     );
   }
 
