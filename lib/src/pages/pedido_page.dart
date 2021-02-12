@@ -47,6 +47,8 @@ class _PedidoPageState extends State<PedidoPage> {
                 _infodelatienda(scan),
                 Divider(color: Theme.of(context).primaryColor, height: 20.0),
                 _infoProductos(context, pedidoS),
+                SizedBox(width: 5.0),
+                _infoTotal(),
               ],
             );
           },
@@ -63,6 +65,33 @@ class _PedidoPageState extends State<PedidoPage> {
             style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
         alignment: Alignment.topLeft,
       ),
+    );
+  }
+
+  _infoTotal() {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            alignment: Alignment.bottomRight,
+            padding: EdgeInsets.all(5.0),
+            child: RaisedButton(
+              child: Text('Enviar Pedido'),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0)),
+              onPressed: () {},
+            ),
+          ),
+        ),
+        Container(
+          child: Text(
+            '15500',
+            style: TextStyle(
+                color: Colors.red, fontWeight: FontWeight.bold, fontSize: 20.0),
+          ),
+          padding: EdgeInsets.all(5.0),
+        )
+      ],
     );
   }
 
@@ -161,13 +190,19 @@ class _PedidoPageState extends State<PedidoPage> {
     return Expanded(
       child: Column(
         children: [
-          Text('Total',
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
-          SizedBox(height: 10.0),
+/*           Text('Total',
+              style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold)),
+          SizedBox(height: 10.0), */
           Container(
             child: Text('${_nproducto[i].cantidad * pedidoS[i].precio}',
-                style: TextStyle(fontSize: 16.0)),
-            color: Colors.red,
+                style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold)),
+            decoration: BoxDecoration(
+              color: Colors.red,
+              borderRadius: BorderRadius.circular(5.0),
+            ),
           )
         ],
       ),
@@ -175,9 +210,6 @@ class _PedidoPageState extends State<PedidoPage> {
   }
 
   void _canditadProducto() {
-/*     for (var i = 0; i < pedidoS.length; i++) {
-      var list = <CantidadP>[];
-    } */
     var list = <CantidadP>[
       CantidadP(cantidad: 0),
       CantidadP(cantidad: 0),
