@@ -24,7 +24,7 @@ class _PedidoPageState extends State<PedidoPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _canditadProducto(pedidoS);
+    _canditadProducto();
   }
 
   @override
@@ -73,8 +73,27 @@ class _PedidoPageState extends State<PedidoPage> {
     return Flexible(
         child: ListView.builder(
             itemCount: pedidoS.length,
-            itemBuilder: (context, i) =>
-                _productosPedidos(context, pedidoS, i)));
+            itemBuilder: (context, i) => Dismissible(
+                  key: UniqueKey(),
+                  background: Container(
+                    color: Theme.of(context).primaryColor,
+                    child: Icon(
+                      Icons.delete,
+                      color: Colors.white,
+                      size: 35.0,
+                    ),
+                    alignment: Alignment.centerRight,
+                    padding: EdgeInsets.only(right: 20.0),
+                  ),
+                  direction: DismissDirection.endToStart,
+                  onDismissed: (direction) {
+                    pedidoS.removeAt(i);
+                    _nproducto.removeAt(i);
+                    print('numero de lista: ${pedidoS.length}');
+                    print('numero de producto: ${_nproducto.length}');
+                  },
+                  child: _productosPedidos(context, pedidoS, i),
+                )));
   }
 
   _productosPedidos(BuildContext context, List<ProductosModel> pedidoS, int i) {
@@ -170,7 +189,7 @@ class _PedidoPageState extends State<PedidoPage> {
     );
   }
 
-  void _canditadProducto(List<ProductosModel> pedidoS) {
+  void _canditadProducto() {
 /*     for (var i = 0; i < pedidoS.length; i++) {
       var list = <CantidadP>[];
     } */
