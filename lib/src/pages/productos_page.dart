@@ -50,11 +50,11 @@ class _ProductosPageState extends State<ProductosPage> {
               children: [
                 SizedBox(height: 10.0),
                 _nombredelProducto(),
-                SizedBox(height: 20.0),
+                SizedBox(height: 10.0),
                 _preciodelProducto(),
-                SizedBox(height: 20.0),
+                SizedBox(height: 5.0),
                 _botonAgregarProducto(),
-                Divider(color: Theme.of(context).primaryColor, height: 20.0),
+                Divider(color: Theme.of(context).primaryColor, height: 5.0),
                 _productosAgregados(productoS),
               ],
             );
@@ -63,41 +63,48 @@ class _ProductosPageState extends State<ProductosPage> {
   }
 
   Widget _nombredelProducto() {
-    return TextField(
-        keyboardType: TextInputType.text,
-        controller: _controller,
-        decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-            hintText: 'Nombre del producto',
-            labelText: 'Producto',
-            suffixIcon: Icon(Icons.format_list_bulleted),
-            icon: Icon(Icons.account_balance)),
-        onChanged: (valor) => setState(() {
-              _producto = valor;
-            }));
+    return Container(
+      padding: EdgeInsets.all(5.0),
+      child: TextField(
+          keyboardType: TextInputType.text,
+          controller: _controller,
+          decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              hintText: 'Nombre del producto',
+              labelText: 'Producto',
+              suffixIcon: Icon(Icons.format_list_bulleted),
+              icon: Icon(Icons.account_balance)),
+          onChanged: (valor) => setState(() {
+                _producto = valor;
+              })),
+    );
   }
 
   Widget _preciodelProducto() {
-    return TextField(
-        keyboardType: TextInputType.number,
-        controller: _controller2,
-        decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-            hintText: 'Precio del producto',
-            labelText: 'Precio',
-            suffixIcon: Icon(Icons.monetization_on),
-            icon: Icon(Icons.money)),
-        onChanged: (valor) => setState(() {
-              _precio = valor;
-            }));
+    return Container(
+      padding: EdgeInsets.all(5.0),
+      child: TextField(
+          keyboardType: TextInputType.number,
+          controller: _controller2,
+          decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              hintText: 'Precio del producto',
+              labelText: 'Precio',
+              suffixIcon: Icon(Icons.monetization_on),
+              icon: Icon(Icons.money)),
+          onChanged: (valor) => setState(() {
+                _precio = valor;
+              })),
+    );
   }
 
   Widget _botonAgregarProducto() {
-    return Align(
+    return Container(
+      padding: EdgeInsets.all(5.0),
       alignment: Alignment.centerRight,
       child: RaisedButton(
         elevation: 20.0,
