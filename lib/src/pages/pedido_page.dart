@@ -17,7 +17,6 @@ class _PedidoPageState extends State<PedidoPage> {
   final productosBloc = new ProductosBloc();
   List<CantidadP> _nproducto = List<CantidadP>();
   //final _cantidad = new Cantidad();
-  double _spinner = 0;
   List<ProductosModel> pedidoS;
 
   @override
@@ -48,7 +47,7 @@ class _PedidoPageState extends State<PedidoPage> {
                 Divider(color: Theme.of(context).primaryColor, height: 20.0),
                 _infoProductos(context, pedidoS),
                 SizedBox(width: 5.0),
-                _infoTotal(),
+                _infoTotal(pedidoS, _nproducto, context),
               ],
             );
           },
@@ -68,7 +67,12 @@ class _PedidoPageState extends State<PedidoPage> {
     );
   }
 
-  _infoTotal() {
+  _infoTotal(List<ProductosModel> pedidoS, List<CantidadP> _nproducto,
+      BuildContext context) {
+    double total = 0.0;
+    for (var i = 0; i < pedidoS.length; i++) {
+      total = total + pedidoS[i].precio * _nproducto[i].cantidad;
+    }
     return Row(
       children: [
         Expanded(
@@ -85,7 +89,7 @@ class _PedidoPageState extends State<PedidoPage> {
         ),
         Container(
           child: Text(
-            '15500',
+            'Total:  \$${total.toStringAsFixed(0)}',
             style: TextStyle(
                 color: Colors.red, fontWeight: FontWeight.bold, fontSize: 20.0),
           ),
@@ -148,8 +152,6 @@ class _PedidoPageState extends State<PedidoPage> {
                   color: Colors.white,
                   fontWeight: FontWeight.bold)),
           _iconosIncremento(Icons.add, i, pedidoS),
-
-          // _prueba(),
         ],
       ),
     );
@@ -163,7 +165,7 @@ class _PedidoPageState extends State<PedidoPage> {
       onPressed: () {
         setState(() {
           _nproducto[i].cantidad++;
-          print('Incremento[$i] : ${_nproducto[i].cantidad}');
+          //print('Incremento[$i] : ${_nproducto[i].cantidad}');
         });
       },
     );
@@ -176,7 +178,7 @@ class _PedidoPageState extends State<PedidoPage> {
       iconSize: 20.0,
       onPressed: () {
         setState(() {
-          print('Decremento [$i] : ${_nproducto[i].cantidad}');
+          //print('Decremento [$i] : ${_nproducto[i].cantidad}');
           _nproducto[i].cantidad--;
           if (_nproducto[i].cantidad <= 0) {
             _nproducto[i].cantidad = 0;
