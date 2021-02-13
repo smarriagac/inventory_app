@@ -1,12 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_cart/flutter_cart.dart';
 import 'package:rickpan_app/src/models/carrito_model.dart';
 
 import 'package:rickpan_app/src/models/scan_model.dart';
 import 'package:rickpan_app/src/bloc/productos_bloc.dart';
 import 'package:rickpan_app/src/providers/db_provider.dart';
-import 'package:spinner_input/spinner_input.dart';
+
+import 'package:pdf/widgets.dart' as pw;
+
+import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 class PedidoPage extends StatefulWidget {
   @override
@@ -47,7 +52,7 @@ class _PedidoPageState extends State<PedidoPage> {
                 Divider(color: Theme.of(context).primaryColor, height: 20.0),
                 _infoProductos(context, pedidoS),
                 SizedBox(width: 5.0),
-                _infoTotal(pedidoS, _nproducto, context),
+                _infoTotal(pedidoS, _nproducto, context, scan),
               ],
             );
           },
@@ -68,7 +73,7 @@ class _PedidoPageState extends State<PedidoPage> {
   }
 
   _infoTotal(List<ProductosModel> pedidoS, List<CantidadP> _nproducto,
-      BuildContext context) {
+      BuildContext context, ScanModel scan) {
     double total = 0.0;
     for (var i = 0; i < pedidoS.length; i++) {
       total = total + pedidoS[i].precio * _nproducto[i].cantidad;
@@ -83,7 +88,9 @@ class _PedidoPageState extends State<PedidoPage> {
               child: Text('Enviar Pedido'),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0)),
-              onPressed: () {},
+              onPressed: () {
+                _generarPDF(pedidoS, _nproducto, context, scan);
+              },
             ),
           ),
         ),
@@ -248,5 +255,17 @@ class _PedidoPageState extends State<PedidoPage> {
     setState(() {
       _nproducto = list;
     });
+  }
+
+  Future<void> _generarPDF(List<ProductosModel> pedidoS,
+      List<CantidadP> nproducto, BuildContext context, ScanModel scan) async {
+    final pdf = pw.Document();
+
+    pdf.addPage(pw.Page(
+      build: (pw.Context context) => pw.Center(child: pw.Text('${scan.valor}')),
+    ));
+
+    final file = File('exa.pdf');
+    await file.writeAsBytes(await pdf.save());
   }
 }

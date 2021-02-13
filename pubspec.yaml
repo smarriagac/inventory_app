@@ -35,6 +35,8 @@ dependencies:
   curved_navigation_bar: ^0.3.7
   spinner_input: ^0.1.2 
   flutter_cart: ^0.0.5+1
+  syncfusion_flutter_pdf: ^18.4.42-beta
+  pdf: ^2.1.0
   
 
 dev_dependencies:
