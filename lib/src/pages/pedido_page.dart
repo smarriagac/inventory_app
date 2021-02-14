@@ -12,8 +12,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:open_file/open_file.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 
-import 'package:intl/date_symbol_data_local.dart';
-
 class PedidoPage extends StatefulWidget {
   @override
   _PedidoPageState createState() => _PedidoPageState();
@@ -261,16 +259,30 @@ class _PedidoPageState extends State<PedidoPage> {
     var documento = PdfDocument();
     var pagina = documento.pages.add();
     //fecha
-/*     int myvalue = 1613282258907147;
-    var date = DateFormat.yMMMEd('en_US');
-    print(date.format(DateTime.fromMillisecondsSinceEpoch(myvalue * 1000))); */
     var now = DateTime.now();
-    print(DateFormat("dd - MM - yyyy").format(now));
+    //print(DateFormat("dd - MM - yyyy").format(now));
 
-    pagina.graphics.drawString('${DateFormat("dd-MM-yyyy").format(now)}',
+    // fecha en el pdf
+    pagina.graphics.drawString('${DateFormat("dd/MM/yyyy").format(now)}',
         PdfStandardFont(PdfFontFamily.helvetica, 18),
-        brush: PdfSolidBrush(PdfColor(240, 0, 0)),
-        bounds: Rect.fromLTWH(0, 0, 500, 30));
+        brush: PdfSolidBrush(PdfColor(255, 0, 0)),
+        bounds: Rect.fromLTWH(420, 0, 500, 30));
+
+    // datos de la tienda
+    String datosTienda = scan.valor.toString();
+    var layaoutResult = PdfTextElement(
+            text: datosTienda,
+            font: PdfStandardFont(PdfFontFamily.helvetica, 18),
+            brush: PdfSolidBrush(PdfColor(0, 0, 0)))
+        .draw(
+            page: pagina,
+            bounds: Rect.fromLTWH(0, 0, pagina.getClientSize().width,
+                pagina.getClientSize().height),
+            format: PdfLayoutFormat(layoutType: PdfLayoutType.paginate));
+    pagina.graphics.drawLine(
+        PdfPen(PdfColor(0, 26, 248)),
+        Offset(0, layaoutResult.bounds.bottom + 10),
+        Offset(pagina.getClientSize().width, layaoutResult.bounds.bottom + 10));
 
     // guardar informacion en documento
     var bytes = documento.save();
