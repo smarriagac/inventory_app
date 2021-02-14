@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:rickpan_app/src/bloc/validator.dart';
 import 'package:rickpan_app/src/models/carrito_model.dart';
 
 import 'package:rickpan_app/src/models/scan_model.dart';
@@ -258,41 +259,146 @@ class _PedidoPageState extends State<PedidoPage> {
       List<CantidadP> _nproducto, BuildContext context, ScanModel scan) async {
     var documento = PdfDocument();
     var pagina = documento.pages.add();
+    var tamanoPagina = pagina.getClientSize();
     //fecha
     var now = DateTime.now();
     //print(DateFormat("dd - MM - yyyy").format(now));
 
-    // fecha en el pdf
+    // ================ figura rickpan ========================= //
+    pagina.graphics.drawRectangle(
+        brush: PdfSolidBrush(PdfColor(91, 126, 215, 255)),
+        bounds: Rect.fromLTWH(0, 0, tamanoPagina.width - 115, 90));
+
+    pagina.graphics.drawString(
+        'RICKPAN', PdfStandardFont(PdfFontFamily.helvetica, 30),
+        brush: PdfBrushes.red,
+        bounds: Rect.fromLTWH(25, 0, tamanoPagina.width - 115, 90),
+        format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.middle));
+
+    pagina.graphics.drawRectangle(
+        bounds: Rect.fromLTWH(400, 0, tamanoPagina.width - 400, 90),
+        brush: PdfSolidBrush(PdfColor(65, 104, 205)));
+
+    // ================= fecha en el pdf =========================//
     pagina.graphics.drawString('${DateFormat("dd/MM/yyyy").format(now)}',
         PdfStandardFont(PdfFontFamily.helvetica, 18),
-        brush: PdfSolidBrush(PdfColor(255, 0, 0)),
-        bounds: Rect.fromLTWH(420, 0, 500, 30));
+        brush: PdfBrushes.red, bounds: Rect.fromLTWH(420, 125, 500, 30));
 
-    // datos de la tienda
+    // ================ datos de la tienda ======================= //
     String datosTienda = scan.valor.toString();
     var layaoutResult = PdfTextElement(
             text: datosTienda,
-            font: PdfStandardFont(PdfFontFamily.helvetica, 18),
+            font: PdfStandardFont(PdfFontFamily.helvetica, 20),
             brush: PdfSolidBrush(PdfColor(0, 0, 0)))
         .draw(
             page: pagina,
-            bounds: Rect.fromLTWH(0, 0, pagina.getClientSize().width,
-                pagina.getClientSize().height),
+            bounds:
+                Rect.fromLTWH(0, 100, tamanoPagina.width, tamanoPagina.height),
             format: PdfLayoutFormat(layoutType: PdfLayoutType.paginate));
     pagina.graphics.drawLine(
         PdfPen(PdfColor(0, 26, 248)),
         Offset(0, layaoutResult.bounds.bottom + 10),
-        Offset(pagina.getClientSize().width, layaoutResult.bounds.bottom + 10));
+        Offset(tamanoPagina.width, layaoutResult.bounds.bottom + 10));
 
-    // guardar informacion en documento
+    // =========================== TABLA ================================= //
+    var grid = PdfGrid();
+
+    grid.columns.add(count: 4);
+
+    var encabezado = grid.headers.add(1)[0];
+    encabezado.cells[0].value = 'Producto';
+    encabezado.cells[0].stringFormat.alignment = PdfTextAlignment.center;
+    encabezado.cells[1].value = 'Precio';
+    encabezado.cells[1].stringFormat.alignment = PdfTextAlignment.center;
+    encabezado.cells[2].value = 'Cantidad';
+    encabezado.cells[2].stringFormat.alignment = PdfTextAlignment.center;
+    encabezado.cells[3].value = 'Total';
+    encabezado.cells[3].stringFormat.alignment = PdfTextAlignment.center;
+    encabezado.style.backgroundBrush = PdfBrushes.red;
+    encabezado.style.font =
+        PdfStandardFont(PdfFontFamily.helvetica, 12, style: PdfFontStyle.bold);
+
+    grid.applyBuiltInStyle(PdfGridBuiltInStyle.listTable1LightAccent5);
+
+    for (var i = 0; i < pedidoS.length; i++) {
+      agregarListProduct(
+          nombproducto: pedidoS[i].producto,
+          precio: pedidoS[i].precio,
+          cantidad: _nproducto[i].cantidad,
+          total: _nproducto[i].cantidad * pedidoS[i].precio,
+          grid: grid);
+    }
+
+    grid.columns[1].width = 200;
+    for (var i = 0; i < encabezado.cells.count; i++) {
+      encabezado.cells[i].style.cellPadding =
+          PdfPaddings(bottom: 5, left: 5, right: 5, top: 5);
+    }
+/*     for (var i = 0; i < grid.rows.count; i++) {
+      var row = grid.rows[i];
+      for (var j = 0; j < row.cells.count; j++) {
+        var cell = row.cells[j];
+        if (j == 0) {
+          cell.stringFormat.alignment = PdfTextAlignment.center;
+        }
+        cell.style.cellPadding =
+            PdfPaddings(bottom: 5, left: 5, right: 5, top: 5);
+      }
+    } */
+    //return grid;
+
+    grid.draw(
+        page: pagina,
+        bounds: Rect.fromLTWH(0, 210, tamanoPagina.width, tamanoPagina.height));
+
+    // ========================= TOTAL  PRINCIPAL =========================== //
+    pagina.graphics.drawString(
+        'TOTAL \$${getTotalAmount(grid).toStringAsFixed(0)}',
+        PdfStandardFont(PdfFontFamily.helvetica, 18),
+        bounds: Rect.fromLTWH(400, 0, tamanoPagina.width - 400, 100),
+        brush: PdfBrushes.white,
+        format: PdfStringFormat(
+            alignment: PdfTextAlignment.center,
+            lineAlignment: PdfVerticalAlignment.middle));
+
+    // ==================== TOTAL FINAL ==================================== //
+
+    // =============== guardar informacion en documento =================== //
     var bytes = documento.save();
     documento.dispose();
 
-    // abrir pdf
+    // =============== abrir pdf ======================= //
     Directory directory = await getExternalStorageDirectory();
     String path = directory.path;
     File file = File('$path/Output.pdf');
     await file.writeAsBytes(bytes, flush: true);
     OpenFile.open('$path/Output.pdf');
+  }
+
+  agregarListProduct(
+      {String nombproducto,
+      int precio,
+      int cantidad,
+      int total,
+      PdfGrid grid}) {
+    var row = grid.rows.add();
+    row.cells[0].value = nombproducto.toString();
+    row.cells[0].stringFormat.alignment = PdfTextAlignment.center;
+    row.cells[1].value = precio.toString();
+    row.cells[1].stringFormat.alignment = PdfTextAlignment.center;
+    row.cells[2].value = cantidad.toString();
+    row.cells[2].stringFormat.alignment = PdfTextAlignment.center;
+    row.cells[3].value = total.toString();
+    row.cells[3].stringFormat.alignment = PdfTextAlignment.center;
+    row.style.font = PdfStandardFont(PdfFontFamily.helvetica, 10);
+  }
+
+  double getTotalAmount(PdfGrid grid) {
+    double totalGe = 0;
+    for (int i = 0; i < grid.rows.count; i++) {
+      final String value = grid.rows[i].cells[grid.columns.count - 1].value;
+      totalGe += double.parse(value);
+    }
+    return totalGe;
   }
 }
