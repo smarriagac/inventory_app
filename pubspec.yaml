@@ -38,7 +38,8 @@ dependencies:
   syncfusion_flutter_pdf: ^18.4.42-beta
   pdf: ^2.1.0
   open_file: ^3.0.3
-  
+  intl: ^0.16.1
+  date_format: ^1.0.9
 
 dev_dependencies:
   flutter_test:

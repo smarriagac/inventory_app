@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:rickpan_app/src/models/carrito_model.dart';
 
 import 'package:rickpan_app/src/models/scan_model.dart';
@@ -10,6 +11,8 @@ import 'package:rickpan_app/src/providers/db_provider.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:open_file/open_file.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
+
+import 'package:intl/date_symbol_data_local.dart';
 
 class PedidoPage extends StatefulWidget {
   @override
@@ -256,15 +259,20 @@ class _PedidoPageState extends State<PedidoPage> {
   Future<void> _generarPDF(List<ProductosModel> pedidoS,
       List<CantidadP> _nproducto, BuildContext context, ScanModel scan) async {
     var documento = PdfDocument();
-    documento.pages.add().graphics.drawString(
-        'Hola PUTOOOOO', PdfStandardFont(PdfFontFamily.helvetica, 18),
+    var pagina = documento.pages.add();
+    //fecha
+/*     int myvalue = 1613282258907147;
+    var date = DateFormat.yMMMEd('en_US');
+    print(date.format(DateTime.fromMillisecondsSinceEpoch(myvalue * 1000))); */
+    var now = DateTime.now();
+    print(DateFormat("dd - MM - yyyy").format(now));
+
+    pagina.graphics.drawString('${DateFormat("dd-MM-yyyy").format(now)}',
+        PdfStandardFont(PdfFontFamily.helvetica, 18),
         brush: PdfSolidBrush(PdfColor(240, 0, 0)),
         bounds: Rect.fromLTWH(0, 0, 500, 30));
 
-    documento.pages.add().graphics.drawString(
-        '12/15/2020', PdfStandardFont(PdfFontFamily.helvetica, 15),
-        brush: PdfSolidBrush(PdfColor(200, 0, 0)),
-        bounds: Rect.fromLTWH(100, 0, 500, 30));
+    // guardar informacion en documento
     var bytes = documento.save();
     documento.dispose();
 
