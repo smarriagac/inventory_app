@@ -37,6 +37,7 @@ dependencies:
   flutter_cart: ^0.0.5+1
   syncfusion_flutter_pdf: ^18.4.42-beta
   pdf: ^2.1.0
+  open_file: ^3.0.3
   
 
 dev_dependencies:
