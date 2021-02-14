@@ -1,16 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_cart/flutter_cart.dart';
 import 'package:rickpan_app/src/models/carrito_model.dart';
 
 import 'package:rickpan_app/src/models/scan_model.dart';
 import 'package:rickpan_app/src/bloc/productos_bloc.dart';
 import 'package:rickpan_app/src/providers/db_provider.dart';
 
-import 'package:pdf/widgets.dart' as pw;
-
-import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:path_provider/path_provider.dart';
+import 'package:open_file/open_file.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 class PedidoPage extends StatefulWidget {
@@ -88,9 +86,7 @@ class _PedidoPageState extends State<PedidoPage> {
               child: Text('Enviar Pedido'),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0)),
-              onPressed: () {
-                _generarPDF(pedidoS, _nproducto, context, scan);
-              },
+              onPressed: () => _generarPDF(pedidoS, _nproducto, context, scan),
             ),
           ),
         ),
@@ -258,14 +254,25 @@ class _PedidoPageState extends State<PedidoPage> {
   }
 
   Future<void> _generarPDF(List<ProductosModel> pedidoS,
-      List<CantidadP> nproducto, BuildContext context, ScanModel scan) async {
-    final pdf = pw.Document();
+      List<CantidadP> _nproducto, BuildContext context, ScanModel scan) async {
+    var documento = PdfDocument();
+    documento.pages.add().graphics.drawString(
+        'Hola PUTOOOOO', PdfStandardFont(PdfFontFamily.helvetica, 18),
+        brush: PdfSolidBrush(PdfColor(240, 0, 0)),
+        bounds: Rect.fromLTWH(0, 0, 500, 30));
 
-    pdf.addPage(pw.Page(
-      build: (pw.Context context) => pw.Center(child: pw.Text('${scan.valor}')),
-    ));
+    documento.pages.add().graphics.drawString(
+        '12/15/2020', PdfStandardFont(PdfFontFamily.helvetica, 15),
+        brush: PdfSolidBrush(PdfColor(200, 0, 0)),
+        bounds: Rect.fromLTWH(100, 0, 500, 30));
+    var bytes = documento.save();
+    documento.dispose();
 
-    final file = File('exa.pdf');
-    await file.writeAsBytes(await pdf.save());
+    // abrir pdf
+    Directory directory = await getExternalStorageDirectory();
+    String path = directory.path;
+    File file = File('$path/Output.pdf');
+    await file.writeAsBytes(bytes, flush: true);
+    OpenFile.open('$path/Output.pdf');
   }
 }
