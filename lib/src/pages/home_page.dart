@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
       ],
       animationCurve: Curves.easeInOutBack,
       animationDuration: Duration(milliseconds: 1000),
-      color: Colors.amberAccent,
+      color: Color.fromRGBO(0, 29, 125, 50.0),
       onTap: (index) {
         setState(() {
           currentIndex = index;

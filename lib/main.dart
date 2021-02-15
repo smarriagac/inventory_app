@@ -17,7 +17,9 @@ class MyApp extends StatelessWidget {
         'pedido': (BuildContext context) => PedidoPage(),
         //'lector': (BuildContext context) => ScanView(),
       },
-      theme: ThemeData(primaryColor: Colors.brown),
+      theme: ThemeData(primaryColor: Color.fromRGBO(214, 180, 109, 1.0)
+          //Color.fromRGBO(214, 180, 109, 1.0),
+          ),
     );
   }
 }
