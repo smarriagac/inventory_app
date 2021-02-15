@@ -4,7 +4,6 @@ import 'package:rickpan_app/src/bloc/scans_bloc.dart';
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
-import 'package:rickpan_app/src/pages/pedidos_page.dart';
 import 'package:rickpan_app/src/pages/productos_page.dart';
 import 'package:rickpan_app/src/pages/tienda_page.dart';
 import 'package:rickpan_app/src/pages/Info_page.dart';
@@ -33,8 +32,6 @@ class _HomePageState extends State<HomePage> {
       case 1:
         return ProductosPage();
       case 2:
-        return PedidosPage();
-      case 3:
         return InfoPage();
       //break;
       default:
@@ -51,10 +48,11 @@ class _HomePageState extends State<HomePage> {
         Icon(Icons.house, size: 30, color: Theme.of(context).primaryColor),
         Icon(Icons.add_box_sharp,
             size: 30, color: Theme.of(context).primaryColor),
-        Icon(Icons.inventory, size: 30, color: Theme.of(context).primaryColor),
         Icon(Icons.info_outline,
             size: 30, color: Theme.of(context).primaryColor)
       ],
+      animationCurve: Curves.easeInOutBack,
+      animationDuration: Duration(milliseconds: 1000),
       color: Colors.amberAccent,
       onTap: (index) {
         setState(() {
