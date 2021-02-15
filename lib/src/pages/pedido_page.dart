@@ -262,30 +262,30 @@ class _PedidoPageState extends State<PedidoPage> {
 
     // ================ figura rickpan ========================= //
     pagina.graphics.drawRectangle(
-        brush: PdfSolidBrush(PdfColor(91, 126, 215, 255)),
+        brush: PdfSolidBrush(PdfColor(205, 167, 92, 255)),
         bounds: Rect.fromLTWH(0, 0, tamanoPagina.width - 115, 90));
 
     pagina.graphics.drawString(
         'RICKPAN', PdfStandardFont(PdfFontFamily.helvetica, 30),
-        brush: PdfBrushes.red,
+        brush: PdfSolidBrush(PdfColor(0, 28, 125)),
         bounds: Rect.fromLTWH(25, 0, tamanoPagina.width - 115, 90),
         format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.middle));
 
     pagina.graphics.drawRectangle(
         bounds: Rect.fromLTWH(400, 0, tamanoPagina.width - 400, 90),
-        brush: PdfSolidBrush(PdfColor(65, 104, 205)));
+        brush: PdfSolidBrush(PdfColor(188, 144, 49)));
 
     // ================= fecha en el pdf =========================//
     pagina.graphics.drawString('${DateFormat("dd/MM/yyyy").format(now)}',
         PdfStandardFont(PdfFontFamily.helvetica, 18),
-        brush: PdfBrushes.red, bounds: Rect.fromLTWH(420, 125, 500, 30));
+        brush: PdfBrushes.red, bounds: Rect.fromLTWH(420, 130, 500, 30));
 
     // ================ datos de la tienda ======================= //
     String datosTienda = scan.valor.toString();
     var layaoutResult = PdfTextElement(
             text: datosTienda,
             font: PdfStandardFont(PdfFontFamily.helvetica, 20),
-            brush: PdfSolidBrush(PdfColor(0, 0, 0)))
+            brush: PdfSolidBrush(PdfColor(0, 28, 125)))
         .draw(
             page: pagina,
             bounds:
@@ -310,9 +310,10 @@ class _PedidoPageState extends State<PedidoPage> {
     encabezado.cells[2].stringFormat.alignment = PdfTextAlignment.center;
     encabezado.cells[3].value = 'Total';
     encabezado.cells[3].stringFormat.alignment = PdfTextAlignment.center;
-    encabezado.style.backgroundBrush = PdfBrushes.red;
+    encabezado.style.backgroundBrush = PdfSolidBrush(PdfColor(191, 3, 17));
     encabezado.style.font =
         PdfStandardFont(PdfFontFamily.helvetica, 12, style: PdfFontStyle.bold);
+    encabezado.style.textBrush = PdfBrushes.white;
 
     grid.applyBuiltInStyle(PdfGridBuiltInStyle.listTable1LightAccent5);
 
@@ -400,7 +401,9 @@ class _PedidoPageState extends State<PedidoPage> {
     double totalGe = 0;
     for (int i = 0; i < grid.rows.count; i++) {
       final String value = grid.rows[i].cells[grid.columns.count - 1].value;
+
       totalGe += double.parse(value);
+      //print(value);
     }
     return totalGe;
   }
