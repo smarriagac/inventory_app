@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:rickpan_app/src/bloc/validator.dart';
 import 'package:rickpan_app/src/models/carrito_model.dart';
 
 import 'package:rickpan_app/src/models/scan_model.dart';
@@ -86,7 +85,9 @@ class _PedidoPageState extends State<PedidoPage> {
             alignment: Alignment.bottomRight,
             padding: EdgeInsets.all(5.0),
             child: RaisedButton(
-              child: Text('Enviar Pedido'),
+              color: Theme.of(context).primaryColor,
+              child:
+                  Text('Enviar Pedido', style: TextStyle(color: Colors.white)),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0)),
               onPressed: () => _generarPDF(pedidoS, _nproducto, context, scan),
@@ -171,7 +172,6 @@ class _PedidoPageState extends State<PedidoPage> {
       onPressed: () {
         setState(() {
           _nproducto[i].cantidad++;
-          //print('Incremento[$i] : ${_nproducto[i].cantidad}');
         });
       },
     );
@@ -184,7 +184,6 @@ class _PedidoPageState extends State<PedidoPage> {
       iconSize: 20.0,
       onPressed: () {
         setState(() {
-          //print('Decremento [$i] : ${_nproducto[i].cantidad}');
           _nproducto[i].cantidad--;
           if (_nproducto[i].cantidad <= 0) {
             _nproducto[i].cantidad = 0;
@@ -198,9 +197,6 @@ class _PedidoPageState extends State<PedidoPage> {
     return Expanded(
       child: Column(
         children: [
-/*           Text('Total',
-              style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold)),
-          SizedBox(height: 10.0), */
           Container(
             child: Text('${_nproducto[i].cantidad * pedidoS[i].precio}',
                 style: TextStyle(
@@ -263,7 +259,6 @@ class _PedidoPageState extends State<PedidoPage> {
     var tamanoPagina = pagina.getClientSize();
     //fecha
     var now = DateTime.now();
-    //print(DateFormat("dd - MM - yyyy").format(now));
 
     // ================ figura rickpan ========================= //
     pagina.graphics.drawRectangle(
@@ -346,7 +341,6 @@ class _PedidoPageState extends State<PedidoPage> {
             PdfPaddings(bottom: 5, left: 5, right: 5, top: 5);
       }
     }
-    //return grid;
 
     grid.draw(
         page: pagina,
