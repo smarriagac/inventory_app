@@ -11,6 +11,7 @@ import 'package:rickpan_app/src/providers/db_provider.dart';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:open_file/open_file.dart';
+import 'package:share_extend/share_extend.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 class PedidoPage extends StatefulWidget {
@@ -334,7 +335,7 @@ class _PedidoPageState extends State<PedidoPage> {
       encabezado.cells[i].style.cellPadding =
           PdfPaddings(bottom: 5, left: 5, right: 5, top: 5);
     }
-/*     for (var i = 0; i < grid.rows.count; i++) {
+    for (var i = 0; i < grid.rows.count; i++) {
       var row = grid.rows[i];
       for (var j = 0; j < row.cells.count; j++) {
         var cell = row.cells[j];
@@ -344,7 +345,7 @@ class _PedidoPageState extends State<PedidoPage> {
         cell.style.cellPadding =
             PdfPaddings(bottom: 5, left: 5, right: 5, top: 5);
       }
-    } */
+    }
     //return grid;
 
     grid.draw(
@@ -368,11 +369,19 @@ class _PedidoPageState extends State<PedidoPage> {
     documento.dispose();
 
     // =============== abrir pdf ======================= //
-    Directory directory = await getExternalStorageDirectory();
-    String path = directory.path;
-    File file = File('$path/Output.pdf');
+    Directory directorio = Platform.isAndroid
+        ? await getExternalStorageDirectory()
+        : await getApplicationDocumentsDirectory();
+    String path = directorio.path;
+    File file = File('$path/facturas/Pedido.pdf');
+    if (!await file.exists()) {
+      await file.create(recursive: true);
+      file.writeAsStringSync('Compartir Documento');
+    }
     await file.writeAsBytes(bytes, flush: true);
-    OpenFile.open('$path/Output.pdf');
+    //OpenFile.open('$path/Pedido.pdf'); // abrir el pdf con app local instalada
+    // ================ Compartir archivo guardado ======================== //
+    ShareExtend.share(file.path, "Archvo", sharePanelTitle: 'Enviar pedido');
   }
 
   agregarListProduct(

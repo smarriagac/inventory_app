@@ -70,7 +70,7 @@ class _MapasPageState extends State<MapasPage> {
         leading: Image.asset('assets/store.png'),
         title: Text(scans[i].valor,
             style: TextStyle(fontSize: 15.0, fontStyle: FontStyle.italic)),
-        subtitle: Text('ID: ${scans[i].id}'),
+        subtitle: Text('Tienda: ${scans[i].id}'),
         trailing: Icon(Icons.keyboard_arrow_right, color: Colors.grey),
       ),
     );
