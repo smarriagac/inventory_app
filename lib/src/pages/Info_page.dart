@@ -5,7 +5,8 @@ class InfoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detalles'),
+        title: Text('Detalles',
+            style: TextStyle(color: Color.fromRGBO(0, 29, 125, 50.0))),
       ),
       body: Container(
         padding: EdgeInsets.all(10.0),
@@ -58,8 +59,8 @@ class InfoPage extends StatelessWidget {
   }
 
   _creadores() {
-    String creador = 'Diseñada por:\nJEAN CARLOS SOLTO CALDERON\n'
-        'ELIAS ITURRIAGO\n'
+    String creador = 'Diseñada por:\nJEAN CARLOS SOTO CALDERON\n'
+        'ELIAS SAMPALLO ITURRIAGO\n'
         'Director:\nJOSE LUIS CONSUEGRA';
 
     return Flexible(
@@ -68,7 +69,10 @@ class InfoPage extends StatelessWidget {
         padding: EdgeInsets.all(5.0),
         child: Text(
           creador,
-          style: TextStyle(fontSize: 12.0),
+          style: TextStyle(
+              fontSize: 12.0,
+              color: Color.fromRGBO(0, 29, 125, 1.0),
+              fontWeight: FontWeight.bold),
         ),
       ),
     );

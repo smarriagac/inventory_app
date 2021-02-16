@@ -28,12 +28,13 @@ class _ProductosPageState extends State<ProductosPage> {
     productosBloc.obtenerProducto();
     return Scaffold(
         appBar: AppBar(
-          title: Text('Productos'),
+          title: Text('Productos',
+              style: TextStyle(color: Color.fromRGBO(0, 29, 125, 50.0))),
           actions: [
             IconButton(
-              icon: Icon(Icons.delete_forever),
-              onPressed: productosBloc.borrarTODOS,
-            )
+                icon: Icon(Icons.delete_forever),
+                onPressed: productosBloc.borrarTODOS,
+                color: Color.fromRGBO(191, 3, 17, 1.0))
           ],
         ),
         body: StreamBuilder<List<ProductosModel>>(
@@ -140,7 +141,17 @@ class _ProductosPageState extends State<ProductosPage> {
         itemCount: productoS.length,
         itemBuilder: (context, i) => Dismissible(
           key: UniqueKey(),
-          background: Container(color: Theme.of(context).primaryColor),
+          background: Container(
+            padding: EdgeInsets.all(15.0),
+            alignment: Alignment.centerRight,
+            color: Theme.of(context).primaryColor,
+            child: IconButton(
+              icon: Icon(Icons.delete_forever, size: 40.0),
+              color: Color.fromRGBO(0, 29, 125, 50.0),
+              onPressed: () => null,
+            ),
+          ),
+          direction: DismissDirection.endToStart,
           onDismissed: (direction) =>
               productosBloc.borrarProducto(productoS[i].idProducto),
           child: _infoProducto(context, productoS, i),

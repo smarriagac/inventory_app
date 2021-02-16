@@ -17,12 +17,15 @@ class _MapasPageState extends State<MapasPage> {
   Widget build(BuildContext context) {
     scansBloc.obtenerScans();
     return Scaffold(
-      appBar: AppBar(title: Text('Tiendas'), actions: [
-        IconButton(
-          icon: Icon(Icons.delete_forever),
-          onPressed: scansBloc.borrarScanTODOS,
-        )
-      ]),
+      appBar: AppBar(
+          title: Text('Tiendas',
+              style: TextStyle(color: Color.fromRGBO(0, 29, 125, 50.0))),
+          actions: [
+            IconButton(
+                icon: Icon(Icons.delete_forever),
+                onPressed: scansBloc.borrarScanTODOS,
+                color: Color.fromRGBO(191, 3, 17, 1.0))
+          ]),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.filter_center_focus),
@@ -46,8 +49,18 @@ class _MapasPageState extends State<MapasPage> {
             itemCount: scans.length,
             itemBuilder: (context, i) => Dismissible(
               key: UniqueKey(),
-              background: Container(color: Theme.of(context).primaryColor),
+              background: Container(
+                padding: EdgeInsets.all(15.0),
+                alignment: Alignment.centerRight,
+                color: Theme.of(context).primaryColor,
+                child: IconButton(
+                  icon: Icon(Icons.delete_forever, size: 40.0),
+                  color: Color.fromRGBO(0, 29, 125, 50.0),
+                  onPressed: () => null,
+                ),
+              ),
               onDismissed: (direction) => scansBloc.borrarScan(scans[i].id),
+              direction: DismissDirection.endToStart,
               child: Column(
                 children: [
                   SizedBox(height: 5),

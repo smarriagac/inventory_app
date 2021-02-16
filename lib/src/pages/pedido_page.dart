@@ -37,7 +37,8 @@ class _PedidoPageState extends State<PedidoPage> {
     final ScanModel scan = ModalRoute.of(context).settings.arguments;
     return Scaffold(
         appBar: AppBar(
-          title: Text('Realizar Pedido'),
+          title: Text('Realizar Pedido',
+              style: TextStyle(color: Color.fromRGBO(0, 29, 125, 50.0))),
         ),
         body: StreamBuilder<List<ProductosModel>>(
           stream: productosBloc.productoStream,
@@ -363,12 +364,13 @@ class _PedidoPageState extends State<PedidoPage> {
     var bytes = documento.save();
     documento.dispose();
 
-    // =============== abrir pdf ======================= //
+    // =============== guardar pdf ======================= //
+
     Directory directorio = Platform.isAndroid
         ? await getExternalStorageDirectory()
         : await getApplicationDocumentsDirectory();
     String path = directorio.path;
-    File file = File('$path/facturas/Pedido.pdf');
+    File file = File('$path/facturas/Pedido_tienda.pdf');
     if (!await file.exists()) {
       await file.create(recursive: true);
       file.writeAsStringSync('Compartir Documento');
