@@ -28,11 +28,12 @@ class _PedidoPageState extends State<PedidoPage> {
     // TODO: implement initState
     super.initState();
     _canditadProducto();
+    productosBloc.obtenerProducto();
   }
 
   @override
   Widget build(BuildContext context) {
-    productosBloc.obtenerProducto();
+    //productosBloc.obtenerProducto();
     final ScanModel scan = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
@@ -119,18 +120,36 @@ class _PedidoPageState extends State<PedidoPage> {
   }
 
   _productosPedidos(BuildContext context, List<ProductosModel> pedidoS, int i) {
-    return Card(
-      elevation: 15.0,
-      margin: EdgeInsets.all(5.0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-      child: Row(
-        children: [
-          _r1(context, pedidoS, i),
-          Divider(color: Theme.of(context).primaryColor, height: 20.0),
-          _r2(context, pedidoS, i),
-          Divider(color: Theme.of(context).primaryColor, height: 20.0),
-          _r3(context, pedidoS, i),
-        ],
+    return Dismissible(
+      key: UniqueKey(),
+      background: Container(
+        padding: EdgeInsets.all(15.0),
+        alignment: Alignment.centerRight,
+        color: Theme.of(context).primaryColor,
+        child: IconButton(
+          icon: Icon(Icons.delete_forever, size: 40.0),
+          color: Color.fromRGBO(0, 29, 125, 50.0),
+          onPressed: () => null,
+        ),
+      ),
+      direction: DismissDirection.endToStart,
+      onDismissed: (direction) {
+        pedidoS.removeAt(i);
+      },
+      child: Card(
+        elevation: 15.0,
+        margin: EdgeInsets.all(5.0),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+        child: Row(
+          children: [
+            _r1(context, pedidoS, i),
+            Divider(color: Theme.of(context).primaryColor, height: 20.0),
+            _r2(context, pedidoS, i),
+            Divider(color: Theme.of(context).primaryColor, height: 20.0),
+            _r3(context, pedidoS, i),
+          ],
+        ),
       ),
     );
   }
@@ -147,9 +166,9 @@ class _PedidoPageState extends State<PedidoPage> {
 
   _r2(BuildContext context, List<ProductosModel> pedidoS, int i) {
     return Card(
-      color: Colors.brown[500],
+      color: Color.fromRGBO(0, 29, 125, 1.0),
       semanticContainer: true,
-      margin: EdgeInsets.all(5.0),
+      margin: EdgeInsets.all(2.0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100.0)),
       child: Row(
         children: [
@@ -168,7 +187,7 @@ class _PedidoPageState extends State<PedidoPage> {
   _iconosIncremento(IconData icono, int i, List<ProductosModel> pedidoS) {
     return IconButton(
       icon: Icon(icono),
-      iconSize: 20.0,
+      iconSize: 18.0,
       color: Colors.amber,
       onPressed: () {
         setState(() {
@@ -182,7 +201,7 @@ class _PedidoPageState extends State<PedidoPage> {
     return IconButton(
       icon: Icon(decremento),
       color: Colors.amber,
-      iconSize: 20.0,
+      iconSize: 18.0,
       onPressed: () {
         setState(() {
           _nproducto[i].cantidad--;
