@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:rickpan_app/src/bloc/productos_bloc.dart';
 import 'package:rickpan_app/src/providers/db_provider.dart';
+import 'package:rickpan_app/src/utils/utils.dart' as util;
 
 class ProductosPage extends StatefulWidget {
   @override
@@ -44,6 +45,7 @@ class _ProductosPageState extends State<ProductosPage> {
               return Center(child: CircularProgressIndicator());
             }
             final productoS = snapshot.data;
+
 /*             if (productoS.length == 0) {
               return Center(child: Text('No hay productos agregados'));
             } */

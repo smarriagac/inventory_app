@@ -20,8 +20,7 @@ class PedidoPage extends StatefulWidget {
 
 class _PedidoPageState extends State<PedidoPage> {
   final productosBloc = new ProductosBloc();
-  List<CantidadP> _nproducto = List<CantidadP>();
-  //final _cantidad = new Cantidad();
+  List<CantidadP> _nproducto = [];
   List<ProductosModel> pedidoS;
 
   @override
@@ -35,6 +34,7 @@ class _PedidoPageState extends State<PedidoPage> {
   Widget build(BuildContext context) {
     productosBloc.obtenerProducto();
     final ScanModel scan = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
         appBar: AppBar(
           title: Text('Realizar Pedido',
@@ -363,7 +363,6 @@ class _PedidoPageState extends State<PedidoPage> {
     // =============== guardar informacion en documento =================== //
     var bytes = documento.save();
     documento.dispose();
-
     // =============== guardar pdf ======================= //
 
     Directory directorio = Platform.isAndroid

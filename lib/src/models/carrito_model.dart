@@ -1,4 +1,4 @@
 class CantidadP {
-  int cantidad = 0;
+  int cantidad;
   CantidadP({this.cantidad = 0});
 }

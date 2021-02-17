@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
       routes: {
         'home': (BuildContext context) => HomePage(),
         'pedido': (BuildContext context) => PedidoPage(),
+
         //'lector': (BuildContext context) => ScanView(),
       },
       theme: ThemeData(primaryColor: Color.fromRGBO(214, 180, 109, 1.0)
