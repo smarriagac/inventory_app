@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:rickpan_app/src/pages/home_page.dart';
 import 'package:rickpan_app/src/pages/pedido_page.dart';
+import 'package:rickpan_app/src/pages/splash_screen_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,8 +12,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Control de inventario RICKPAN',
-      initialRoute: 'home',
+      initialRoute: 'splashScreen',
       routes: {
+        'splashScreen': (BuildContext context) => SplashScreenPage(),
         'home': (BuildContext context) => HomePage(),
         'pedido': (BuildContext context) => PedidoPage(),
 
