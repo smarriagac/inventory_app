@@ -135,6 +135,7 @@ class _PedidoPageState extends State<PedidoPage> {
       direction: DismissDirection.endToStart,
       onDismissed: (direction) {
         pedidoS.removeAt(i);
+        _nproducto.removeAt(i);
       },
       child: Card(
         elevation: 15.0,
