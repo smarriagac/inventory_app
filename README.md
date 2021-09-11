@@ -6,5 +6,5 @@ Aplicacion de control de inventario de una tienda de pan, mediante codigos QR.
 
 #### Pantalla para agregar Productos
 
-![pedido](https://user-images.githubusercontent.com/80381423/132938685-4a48320f-f18c-4ef6-85a3-6284da6ec301.jpg)
+![productos](https://user-images.githubusercontent.com/80381423/132939224-70956bba-1ff4-44de-b07e-c12c41c10fc1.jpg)
 
